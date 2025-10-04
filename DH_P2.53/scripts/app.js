@@ -49,6 +49,26 @@ function showLegend(){ try{ document.getElementById('legend-section')?.classList
         const supportsContentVisibility = typeof CSS !== 'undefined'
             && typeof CSS.supports === 'function'
             && CSS.supports('content-visibility', 'auto');
+        let pendingPlayerRowMeasurement = false;
+
+        function updatePlayerRowIntrinsicSize() {
+            if (!supportsContentVisibility || !rosterGrid) return;
+            if (pendingPlayerRowMeasurement) return;
+
+            pendingPlayerRowMeasurement = true;
+            requestAnimationFrame(() => {
+                pendingPlayerRowMeasurement = false;
+                const sampleRow = rosterGrid.querySelector('.player-row');
+                if (!sampleRow) return;
+
+                const rect = sampleRow.getBoundingClientRect();
+                const measuredHeight = Math.round(rect.height || 0);
+                if (!measuredHeight) return;
+
+                const clampedHeight = Math.max(48, Math.min(140, measuredHeight));
+                document.documentElement.style.setProperty('--player-row-intrinsic-size', `${clampedHeight}px`);
+            });
+        }
 
         const COMPARE_BUTTON_PREVIEW_HTML = '<span class="button-text">Preview</span>';
         const COMPARE_BUTTON_SHOW_ALL_HTML = '<span class="compare-show-all-stack"><i aria-hidden="true" class="fa-solid fa-arrows-left-right-to-line compare-show-all-icon"></i><span class="compare-show-all-label">Show All</span></span>';
@@ -3127,6 +3147,7 @@ const wrTeStatOrder = [
             }
             adjustStickyHeaders();
             syncRosterHeaderPosition();
+            updatePlayerRowIntrinsicSize();
         }
 
         function createDepthChartTeamCard(team) {
@@ -4041,6 +4062,7 @@ const wrTeStatOrder = [
             }
         }
         window.addEventListener('resize', adjustStickyHeaders);
+        window.addEventListener('resize', updatePlayerRowIntrinsicSize);
 
         function syncRosterHeaderPosition() {
             const header = document.getElementById('header-container');
