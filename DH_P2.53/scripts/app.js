@@ -3060,6 +3060,12 @@ const wrTeStatOrder = [
 
         function calibrateTeamCardIntrinsicSize(card) {
             if (!supportsContentVisibility || !card) return;
+
+            const computedVisibility = window.getComputedStyle(card).getPropertyValue('content-visibility');
+            if (computedVisibility !== 'auto') {
+                return;
+            }
+
             requestAnimationFrame(() => {
                 const measuredHeight = card.getBoundingClientRect().height;
                 if (measuredHeight > 0) {
