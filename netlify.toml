@@ -1,0 +1,52 @@
+# Netlify config for Dynasty Hub (GitHub deploy)
+
+[build]
+  publish = "DH_P2.53"
+
+[[redirects]]
+  from = "/"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/rosters"
+  to = "/rosters/rosters.html"
+  status = 200
+
+[[redirects]]
+  from = "/ownership"
+  to = "/ownership/ownership.html"
+  status = 200
+
+[[redirects]]
+  from = "/analyzer"
+  to = "/analyzer/analyzer.html"
+  status = 200
+
+[[redirects]]
+  from = "/research"
+  to = "/research/research.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+    Content-Security-Policy-Report-Only = "default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.tailwindcss.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' https://cdnjs.cloudflare.com https://cdn.tailwindcss.com https://cdn.jsdelivr.net; img-src 'self' data: blob:; connect-src 'self' https://docs.google.com https://api.sleeper.app; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+    Cache-Control = "public, max-age=300"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[edge_functions]]
+  path = "/api/sheet/*"
+  function = "sheet-proxy"
+
+[[edge_functions]]
+  path = "/api/sleeper/*"
+  function = "sleeper-proxy"
