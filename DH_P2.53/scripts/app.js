@@ -16,6 +16,10 @@ function showLegend(){ try{ document.getElementById('legend-section')?.classList
         const playerListView = document.getElementById('playerListView');
         const rosterContainer = document.getElementById('rosterContainer');
         const rosterGrid = document.getElementById('rosterGrid');
+        const rosterContentVisibilityQuery = (typeof window !== 'undefined' && typeof window.matchMedia === 'function')
+            ? window.matchMedia('(max-width: 819px)')
+            : null;
+        let rosterContentVisibilityEnabled = false;
         const compareButton = document.getElementById('compareButton');
         const compareSearchToggle  = document.getElementById('compareSearchToggle');
         const compareSearchPopover = document.getElementById('compareSearchPopover');
@@ -49,6 +53,29 @@ function showLegend(){ try{ document.getElementById('legend-section')?.classList
         const supportsContentVisibility = typeof CSS !== 'undefined'
             && typeof CSS.supports === 'function'
             && CSS.supports('content-visibility', 'auto');
+
+        function updateRosterContentVisibility() {
+            if (!supportsContentVisibility || !rosterGrid) {
+                rosterContentVisibilityEnabled = false;
+                rosterGrid?.classList.remove('roster-cv-enabled');
+                return;
+            }
+            const shouldEnable = rosterContentVisibilityQuery ? rosterContentVisibilityQuery.matches : false;
+            rosterContentVisibilityEnabled = shouldEnable;
+            rosterGrid.classList.toggle('roster-cv-enabled', shouldEnable);
+        }
+
+        if (supportsContentVisibility) {
+            updateRosterContentVisibility();
+            if (rosterContentVisibilityQuery) {
+                const cvListener = () => updateRosterContentVisibility();
+                if (typeof rosterContentVisibilityQuery.addEventListener === 'function') {
+                    rosterContentVisibilityQuery.addEventListener('change', cvListener);
+                } else if (typeof rosterContentVisibilityQuery.addListener === 'function') {
+                    rosterContentVisibilityQuery.addListener(cvListener);
+                }
+            }
+        }
 
         const COMPARE_BUTTON_PREVIEW_HTML = '<span class="button-text">Preview</span>';
         const COMPARE_BUTTON_SHOW_ALL_HTML = '<span class="compare-show-all-stack"><i aria-hidden="true" class="fa-solid fa-arrows-left-right-to-line compare-show-all-icon"></i><span class="compare-show-all-label">Show All</span></span>';
@@ -3059,7 +3086,7 @@ const wrTeStatOrder = [
         }
 
         function calibrateTeamCardIntrinsicSize(card) {
-            if (!supportsContentVisibility || !card) return;
+            if (!supportsContentVisibility || !rosterContentVisibilityEnabled || !card) return;
             requestAnimationFrame(() => {
                 const measuredHeight = card.getBoundingClientRect().height;
                 if (measuredHeight > 0) {
@@ -3069,6 +3096,7 @@ const wrTeStatOrder = [
         }
 
         function renderAllTeamData(teams) {
+            updateRosterContentVisibility();
             rosterGrid.innerHTML = '';
             rosterGrid.style.justifyContent = ''; // Reset style
 
