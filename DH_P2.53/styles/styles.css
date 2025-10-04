@@ -22,7 +22,7 @@
         --color-accent-secondary-glow: rgba(66, 194, 255, 0.5);
         --color-accent-trade-win: #00F5A0;
         --color-accent-trade-lose: #FF47A6;
-    
+
         /* · · Position Colors · · */
         --pos-qb: #FF3A75ca;
         --pos-rb: #00EBC7ca;
@@ -32,10 +32,11 @@
         --pos-sflx: #FF3A75ca;
         --pos-bn: #64748b;
         --pos-tx: #808ea3;
-    
+
         /* · · Other vars · · */
         --panel-border-radius: 12px;
         --card-border-radius: 8px;
+        --roster-card-blur: 1px;
         --glow-strength: 0.6; /* FIXED: give it a value so parsing continues */
     
         /* · · Orb 3 (shared) — using lengths so gradient center = orb center · · */
@@ -904,12 +905,10 @@
             gap: 0.25rem;
         }
 
-@media (min-width: 820px) {
-  @supports (content-visibility: auto) {
-    #rosterGrid .team-card {
-        content-visibility: auto;
-        contain-intrinsic-size: auto var(--team-card-intrinsic-size, 1200px);
-    }
+@supports (content-visibility: auto) {
+  #rosterGrid.roster-cv-enabled .team-card {
+      content-visibility: auto;
+      contain-intrinsic-size: auto var(--team-card-intrinsic-size, 1200px);
   }
 }
 
@@ -988,8 +987,8 @@
             flex-direction: column;
             gap: 0.01rem;
             transition: all 0.2s ease;
-            backdrop-filter: blur(1px);
-            -webkit-backdrop-filter: blur(1px);
+            backdrop-filter: blur(var(--roster-card-blur));
+            -webkit-backdrop-filter: blur(var(--roster-card-blur));
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
         }
         .is-trade-mode .player-row, .is-trade-mode .pick-row { 
@@ -999,11 +998,24 @@
             border-color: var(--color-panel-border-glow);
             transform: translateY(-2px);
         }
-        
+
         .player-selected {
             border-color: var(--color-accent-primary) !important;
             box-shadow: 0 0 var(--glow-strength) var(--color-accent-primary-glow);
         }
+
+@media (min-width: 1024px) {
+    body[data-page="rosters"] {
+        --roster-card-blur: 0px;
+    }
+
+    body[data-page="rosters"] .player-row,
+    body[data-page="rosters"] .pick-row {
+        background-color: rgba(22, 24, 43, 0.24);
+        box-shadow: 0 0 18px rgba(5, 6, 16, 0.22);
+        contain: paint;
+    }
+}
 
         .player-main-line {
             display: flex;
