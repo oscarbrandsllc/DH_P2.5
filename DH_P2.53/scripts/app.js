@@ -49,6 +49,38 @@ function showLegend(){ try{ document.getElementById('legend-section')?.classList
         const supportsContentVisibility = typeof CSS !== 'undefined'
             && typeof CSS.supports === 'function'
             && CSS.supports('content-visibility', 'auto');
+        const rosterGridHasContentVisibility = () => rosterGrid?.classList.contains('roster-cv-enabled');
+
+        const applyRosterContentVisibilityPreference = (eventOrQuery) => {
+            if (!rosterGrid) return;
+            const shouldEnable = !!eventOrQuery?.matches;
+            if (shouldEnable) {
+                rosterGrid.classList.add('roster-cv-enabled');
+                rosterGrid.querySelectorAll('.team-card').forEach(card => {
+                    calibrateTeamCardIntrinsicSize(card);
+                });
+            } else {
+                rosterGrid.classList.remove('roster-cv-enabled');
+                rosterGrid.querySelectorAll('.team-card').forEach(card => {
+                    card.style.removeProperty('--team-card-intrinsic-size');
+                });
+            }
+        };
+
+        if (pageType === 'rosters'
+            && supportsContentVisibility
+            && typeof window !== 'undefined'
+            && 'matchMedia' in window
+            && rosterGrid) {
+            const rosterContentVisibilityQuery = window.matchMedia('(max-width: 1023px)');
+            const handleRosterContentVisibilityChange = (event) => applyRosterContentVisibilityPreference(event);
+            applyRosterContentVisibilityPreference(rosterContentVisibilityQuery);
+            if (typeof rosterContentVisibilityQuery.addEventListener === 'function') {
+                rosterContentVisibilityQuery.addEventListener('change', handleRosterContentVisibilityChange);
+            } else if (typeof rosterContentVisibilityQuery.addListener === 'function') {
+                rosterContentVisibilityQuery.addListener(handleRosterContentVisibilityChange);
+            }
+        }
 
         const COMPARE_BUTTON_PREVIEW_HTML = '<span class="button-text">Preview</span>';
         const COMPARE_BUTTON_SHOW_ALL_HTML = '<span class="compare-show-all-stack"><i aria-hidden="true" class="fa-solid fa-arrows-left-right-to-line compare-show-all-icon"></i><span class="compare-show-all-label">Show All</span></span>';
@@ -3059,7 +3091,7 @@ const wrTeStatOrder = [
         }
 
         function calibrateTeamCardIntrinsicSize(card) {
-            if (!supportsContentVisibility || !card) return;
+            if (!supportsContentVisibility || !card || !rosterGridHasContentVisibility()) return;
             requestAnimationFrame(() => {
                 const measuredHeight = card.getBoundingClientRect().height;
                 if (measuredHeight > 0) {
