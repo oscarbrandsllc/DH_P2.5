@@ -4029,8 +4029,13 @@ const wrTeStatOrder = [
             const stickyOffset = Math.max(headerHeight - rosterGap, 0);
 
             const teamHeaders = document.querySelectorAll('.team-header-item');
+            const isDesktopLayout = window.matchMedia('(min-width: 820px)').matches;
             teamHeaders.forEach(header => {
-                header.style.top = `${stickyOffset}px`;
+                if (isDesktopLayout) {
+                    header.style.top = '';
+                } else {
+                    header.style.top = `${stickyOffset}px`;
+                }
             });
 
             const isRosterPage = document.body?.dataset?.page === 'rosters';
