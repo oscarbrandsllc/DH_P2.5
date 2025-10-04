@@ -902,14 +902,25 @@
             display: flex;
             flex-direction: column;
             gap: 0.25rem;
+            position: relative;
         }
 
 @media (min-width: 820px) {
-  @supports (content-visibility: auto) {
-    #rosterGrid .team-card {
-        content-visibility: auto;
-        contain-intrinsic-size: auto var(--team-card-intrinsic-size, 1200px);
-    }
+  #rosterGrid .team-card {
+      contain: layout paint;
+  }
+}
+
+@media (min-width: 820px) {
+  .team-card {
+      backdrop-filter: blur(1px);
+      -webkit-backdrop-filter: blur(1px);
+  }
+
+  .player-row,
+  .pick-row {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
   }
 }
 
