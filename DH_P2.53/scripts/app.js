@@ -4030,7 +4030,12 @@ const wrTeStatOrder = [
 
             const teamHeaders = document.querySelectorAll('.team-header-item');
             teamHeaders.forEach(header => {
-                header.style.top = `${stickyOffset}px`;
+                const computedPosition = getComputedStyle(header).position;
+                if (computedPosition === 'sticky') {
+                    header.style.top = `${stickyOffset}px`;
+                } else {
+                    header.style.top = '';
+                }
             });
 
             const isRosterPage = document.body?.dataset?.page === 'rosters';

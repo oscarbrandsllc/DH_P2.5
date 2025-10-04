@@ -913,6 +913,13 @@
   }
 }
 
+@media (min-width: 820px) {
+  .team-header-item {
+      position: static;
+      top: auto;
+  }
+}
+
         .roster-section h3 {
       font-size: 0.8rem;
       font-weight: 700;
