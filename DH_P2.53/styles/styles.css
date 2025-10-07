@@ -3441,26 +3441,21 @@ body[data-page="rosters"] #secondary-header-row #analyzeLeagueButton.active {
 
     #modal-body tbody .week-cell {
         font-weight: 700;
-        text-align: left;
+        text-align: center;
         white-space: nowrap;
-    }
-
-    .week-cell .week-number,
-    .week-opponent-label,
-    .week-opponent-separator {
-        display: inline-block;
         vertical-align: middle;
     }
 
-    .week-opponent-separator {
-        font-weight: 700;
+    .week-cell .week-number,
+    .week-opponent-label {
+        display: block;
+        line-height: 1;
     }
 
     .week-opponent-label {
         font-size: 0.7em;
-        line-height: 1.1;
-        margin-left: 0.1em;
         font-weight: 600;
+        margin-top: 0.1em;
     }
 
 /* · · Table Footer · · */
