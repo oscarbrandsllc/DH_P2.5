@@ -30,44 +30,33 @@
 <div class="relative z-10 content-wrapper">
   <div id="header-container">
     <header class="app-header glass-panel">
-      <div class="header-row">
-        <div class="menu-container">
-          <button id="menu-button" class="menu-button" aria-label="Toggle navigation">
-            <svg viewBox="0 0 100 80" width="20" height="20" aria-hidden="true">
-              <rect width="100" height="15"></rect>
-              <rect y="30" width="100" height="15"></rect>
-              <rect y="60" width="100" height="15"></rect>
-            </svg>
-          </button>
-          <div id="dropdown-menu" class="dropdown-menu hidden">
-            <a href="../index.html">
-              <i class="fa-solid fa-house-user" aria-hidden="true"></i>
-              <span>Home</span>
-            </a>
-            <a href="#" id="menu-rosters">
-              <i class="fa-solid fa-clipboard-list" aria-hidden="true"></i>
-              <span>Rosters</span>
-            </a>
-            <a href="#" id="menu-ownership">
-              <i class="fa-solid fa-percent" aria-hidden="true"></i>
-              <span>Ownership</span>
-            </a>
-            <a href="#" id="menu-research" class="active">
-              <i class="fa-solid fa-flask" aria-hidden="true"></i>
-              <span>Research</span>
-            </a>
-            <a href="#" id="menu-analyzer">
-              <i class="fa-solid fa-square-poll-vertical" aria-hidden="true"></i>
-              <span>League Analyzer</span>
-            </a>
-          </div>
+      <div class="header-row" id="primary-header-row">
+        <div class="logo-container">
+            <div class="app-logo-wrapper">
+                <img src="../assets/welcome/welcome-logo-256.png" alt="Dynasty Hub" class="app-logo" />
+            </div>
         </div>
-        <div class="username-area">
-          <input autocapitalize="none" autocomplete="username" autocorrect="off" id="usernameInput" inputmode="text" name="username" placeholder="SLPR Username..." type="text" value="The_Oracle"/>
-        </div>
-        <div class="app-view-switcher primary-switcher">
-          <button id="fetchRostersButton">Rosters</button>
-          <button id="fetchOwnershipButton">Ownership %</button>
+        <div class="nav-buttons-container">
+            <button class="nav-button" id="nav-home" data-nav="home">
+                <i class="fa-solid fa-house-user" aria-hidden="true"></i>
+                <span class="nav-label">Home</span>
+            </button>
+            <button class="nav-button" id="nav-rosters" data-nav="rosters">
+                <i class="fa-solid fa-clipboard-list" aria-hidden="true"></i>
+                <span class="nav-label">Rosters</span>
+            </button>
+            <button class="nav-button" id="nav-ownership" data-nav="ownership">
+                <i class="fa-solid fa-percent" aria-hidden="true"></i>
+                <span class="nav-label">Ownership</span>
+            </button>
+            <button class="nav-button" id="nav-analyzer" data-nav="analyzer">
+                <i class="fa-solid fa-square-poll-vertical" aria-hidden="true"></i>
+                <span class="nav-label">L.Analyze</span>
+            </button>
+            <button class="nav-button active" id="nav-research" data-nav="research">
+                <i class="fa-solid fa-flask" aria-hidden="true"></i>
+                <span class="nav-label">Research</span>
+            </button>
         </div>
       </div>
     </header>

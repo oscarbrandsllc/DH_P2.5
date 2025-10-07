@@ -193,6 +193,114 @@ function showLegend(){ try{ document.getElementById('legend-section')?.classList
             window.location.href = url;
         });
 
+        // === New Navigation Button Event Listeners ===
+        const navButtons = {
+            home: document.getElementById('nav-home'),
+            rosters: document.getElementById('nav-rosters'),
+            ownership: document.getElementById('nav-ownership'),
+            analyzer: document.getElementById('nav-analyzer'),
+            research: document.getElementById('nav-research')
+        };
+
+        const startSitButton = document.getElementById('startSitButton');
+
+        // Handle navigation button clicks
+        navButtons.home?.addEventListener('click', () => {
+            window.location.href = pageType === 'welcome' ? './' : '../';
+        });
+
+        navButtons.rosters?.addEventListener('click', () => {
+            const username = usernameInput.value.trim();
+            if (!username) return;
+            if (pageType === 'rosters') {
+                handleFetchRosters();
+            } else {
+                let url = pageType === 'welcome'
+                    ? `rosters/rosters.html?username=${encodeURIComponent(username)}`
+                    : `../rosters/rosters.html?username=${encodeURIComponent(username)}`;
+                const selected = leagueSelect?.value;
+                if (selected && selected !== 'Select a league...') {
+                    url += `&leagueId=${selected}`;
+                } else if (state.currentLeagueId) {
+                    url += `&leagueId=${state.currentLeagueId}`;
+                }
+                window.location.href = url;
+            }
+        });
+
+        navButtons.ownership?.addEventListener('click', () => {
+            const username = usernameInput.value.trim();
+            if (!username) return;
+            if (pageType === 'ownership') {
+                handleFetchOwnership();
+            } else {
+                let url = pageType === 'welcome'
+                    ? `ownership/ownership.html?username=${encodeURIComponent(username)}`
+                    : `../ownership/ownership.html?username=${encodeURIComponent(username)}`;
+                const selected = leagueSelect?.value;
+                if (selected && selected !== 'Select a league...') {
+                    url += `&leagueId=${selected}`;
+                } else if (state.currentLeagueId) {
+                    url += `&leagueId=${state.currentLeagueId}`;
+                }
+                window.location.href = url;
+            }
+        });
+
+        navButtons.analyzer?.addEventListener('click', () => {
+            const username = usernameInput.value.trim();
+            if (!username) return;
+            let url = pageType === 'welcome'
+                ? `analyzer/analyzer.html?username=${encodeURIComponent(username)}`
+                : `../analyzer/analyzer.html?username=${encodeURIComponent(username)}`;
+            const selected = leagueSelect?.value || state.currentLeagueId;
+            if (selected && selected !== 'Select a league...') {
+                url += `&leagueId=${selected}`;
+            }
+            window.location.href = url;
+        });
+
+        navButtons.research?.addEventListener('click', () => {
+            if (pageType === 'research') {
+                return;
+            }
+            const url = resolveResearchUrl();
+            window.location.href = url;
+        });
+
+        // Start/Sit button functionality (placeholder)
+        startSitButton?.addEventListener('click', () => {
+            // Placeholder functionality for Start/Sit feature
+            console.log('Start/Sit feature coming soon!');
+            // TODO: Implement start/sit recommendations functionality
+        });
+
+        // Update active nav button based on current page
+        function updateActiveNavButton() {
+            Object.values(navButtons).forEach(btn => btn?.classList.remove('active'));
+            
+            switch(pageType) {
+                case 'rosters':
+                    navButtons.rosters?.classList.add('active');
+                    break;
+                case 'ownership':
+                    navButtons.ownership?.classList.add('active');
+                    break;
+                case 'analyzer':
+                    navButtons.analyzer?.classList.add('active');
+                    break;
+                case 'research':
+                    navButtons.research?.classList.add('active');
+                    break;
+                default:
+                    // No active button for welcome page
+                    break;
+            }
+        }
+
+        // Initialize active nav button
+        updateActiveNavButton();
+
         if (headerQuickLinks && analyzerButtonSlot && researchButtonSlot && analyzerButtonContainer && researchButtonContainer) {
             const quickLinksQuery = window.matchMedia('(min-width: 1024px)');
             const placeQuickLinks = (isDesktop) => {
@@ -371,7 +479,6 @@ function showLegend(){ try{ document.getElementById('legend-section')?.classList
             setLoading(true, 'Loading initial data...');
             await Promise.all([ fetchSleeperPlayers(), fetchDataFromGoogleSheet(), fetchPlayerStatsSheets() ]);
             setLoading(false);
-            if (welcomeScreen) welcomeScreen.classList.remove('hidden');
 
             const params = new URLSearchParams(window.location.search);
             const uname = params.get('username');
@@ -382,6 +489,9 @@ function showLegend(){ try{ document.getElementById('legend-section')?.classList
                 } else if (pageType === 'ownership') {
                     await handleFetchOwnership();
                 }
+            } else {
+                // Only show welcome screen if no username is provided for auto-loading
+                if (welcomeScreen) welcomeScreen.classList.remove('hidden');
             }
         });
 
@@ -441,7 +551,10 @@ function showLegend(){ try{ document.getElementById('legend-section')?.classList
                         await handleLeagueSelect();
                     } else {
                         leagueSelect.selectedIndex = 1;
-                        await handleLeagueSelect();
+                        // Ensure we have a valid selection before calling handleLeagueSelect
+                        if (leagueSelect.selectedIndex > 0 && leagueSelect.value !== 'Select a league...') {
+                            await handleLeagueSelect();
+                        }
                     }
                 } else {
                     contextualControls.classList.add('hidden');
