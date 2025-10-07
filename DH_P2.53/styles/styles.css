@@ -247,597 +247,494 @@
         border-radius: 10px;
         box-shadow: rgba(255, 255, 255, 0.05) 0px 0px 0px 0px inset, rgba(200, 200, 200, 0.025) 0px 0px 0px 3px inset, rgba(0, 0, 0, 0.22) 0px 10px 26px 0px;
         }
-/* ⬇︎  HEADER & CONTROLS (3-ROW REDESIGN)  ⬇︎ */
-        .app-header {
-            padding: 0.25rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-            --header-icon-size: 2.25rem;
-            --header-control-height: 2.2rem;
-            --header-field-max-width: 160px;
-            --header-switcher-width: 12.25rem;
-        }
+/* ⬇︎  HEADER & CONTROLS (NEW 3-ROW DESIGN)  ⬇︎ */
+.app-header {
+    padding: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    --header-control-height: 2.2rem;
+    --header-field-max-width: 160px;
+}
 
-        .header-row {
-            display: flex;
-            flex-wrap: nowrap; /* Prevent wrapping */
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            width: 100%;
-            padding-bottom: 2px; /* space for scrollbar */
-        }
+.header-row {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+}
 
-        .app-header > .header-row:first-of-type,
-        #contextual-controls .header-row:first-child {
-            display: grid;
-            grid-template-columns: var(--header-icon-size) minmax(120px, var(--header-field-max-width)) minmax(var(--header-switcher-width), 1fr);
-            align-items: center;
-            gap: 0.5rem;
-            padding-left: 0.25rem;
-            padding-right: 0.25rem;
-        }
+/* ROW 1: Logo and Nav Buttons */
+#primary-header-row {
+    justify-content: space-between;
+}
 
-        #contextual-controls .header-row {
-            border-top: 1px solid var(--color-panel-border);
-            padding-top: 0.25rem;
-        }
-        #contextual-controls .header-row:first-child {
-            gap: 0.5rem;
-        }
-        #contextual-controls .header-row:has(#positional-filters) {
-            gap: 0.25rem;
-            padding-left: 0.25rem;
-            padding-right: 0.25rem;
-        }
+.logo-container {
+    flex-shrink: 0;
+}
 
-        #primary-header-row .menu-container,
-        #secondary-header-row .analyzer-button-container,
-        .analyzer-button-slot,
-        .research-button-slot {
-            width: max(var(--header-icon-size), 2.6rem);
-            height: var(--header-control-height);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
+.logo-container {
+    position: relative;
+}
 
-        .header-quick-links {
-            display: none;
-            align-items: center;
-            gap: 0.35rem;
-        }
+.app-logo {
+    width: 44px; /* Slightly larger */
+    height: 44px;
+    border-radius: 50%;
+    padding: 6px;
+    background: rgba(20, 22, 40, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
 
-        .header-quick-links .analyzer-button-container,
-        .header-quick-links .research-button-container {
-            width: var(--header-icon-size);
-            height: var(--header-control-height);
-        }
+.nav-buttons-container {
+    display: flex;
+    justify-content: space-around;
+    flex-grow: 1;
+    gap: 0.25rem;
+}
 
-        #primary-header-row .menu-container {
-            position: relative;
-        }
+.nav-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: var(--color-text-secondary);
+    padding: 0.1rem 0.2rem; /* Further reduced padding */
+    font-size: 0.55rem;
+    font-weight: 500;
+    gap: 0.1rem;
+    transition: all 0.2s ease;
+    width: 100%;
+    letter-spacing: normal; /* Fix for weird spacing */
+}
 
-        #primary-header-row .menu-button,
-        #secondary-header-row .analyzer-button {
-            width: 100%;
-            height: 100%;
-            border-radius: 8px;
-            box-sizing: border-box;
-        }
+.nav-button i {
+    font-size: 1.2rem;
+}
 
-        #primary-header-row .menu-button svg {
-            width: 1.25rem;
-            height: 1.25rem;
-        }
+.nav-button:hover {
+    color: var(--color-text-primary);
+    background-color: rgba(255, 255, 255, 0.05);
+}
 
-        #secondary-header-row .analyzer-button,
-        .header-quick-links .analyzer-button,
-        .header-quick-links .research-button {
-            border: none;
-            background: transparent;
-            color: var(--color-text-secondary);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-            gap: 0.1rem;
-        }
+.nav-button.active {
+    color: var(--color-text-primary);
+    background-color: rgba(118, 109, 255, 0.15);
+    border-color: rgba(118, 109, 255, 0.3);
+    box-shadow: 0 0 8px rgba(118, 109, 255, 0.2);
+}
 
-        #secondary-header-row .analyzer-button .analyzer-icon,
-        .header-quick-links .analyzer-button .analyzer-icon,
-        .header-quick-links .research-button .analyzer-icon {
-            display: block;
-            margin: 0;
-            line-height: 1;
-            font-size: 1.22rem;
-        }
+/* ROW 2: Inputs and View Switcher */
+#secondary-header-row {
+    justify-content: center;
+}
 
-        #secondary-header-row .analyzer-button .analyzer-label,
-        .header-quick-links .analyzer-button .analyzer-label,
-        .header-quick-links .research-button .analyzer-label {
-            display: block;
-            margin: -2px 0 0 0;
-            padding: 0;
-            font-size: 0.50rem;
-            font-weight: 400;
-            line-height: 1;
-            color: inherit;
-            white-space: nowrap;
-        }
-        #secondary-header-row .analyzer-button:hover .analyzer-icon,
-        #secondary-header-row .analyzer-button:focus-visible .analyzer-icon,
-        .header-quick-links .analyzer-button:hover .analyzer-icon,
-        .header-quick-links .analyzer-button:focus-visible .analyzer-icon,
-        .header-quick-links .research-button:hover .analyzer-icon,
-        .header-quick-links .research-button:focus-visible .analyzer-icon {
-            color: var(--color-text-primary);
-        }
+#secondary-header-row .username-area,
+#secondary-header-row .custom-select-wrapper {
+    flex-grow: 1;
+    width: 100%; /* Make them take available space */
+    max-width: 240px; /* Increase max-width */
+    height: var(--header-control-height);
+}
 
-        #primary-header-row .username-area,
-        #secondary-header-row .custom-select-wrapper {
-            justify-self: center;
-            width: 100%;
-        }
+#usernameInput, #leagueSelect {
+    width: 100%;
+    box-sizing: border-box; /* Ensure padding is included in width */
+}
 
-        #primary-header-row .primary-switcher,
-        #secondary-header-row .secondary-switcher {
-            justify-self: end;
-            width: min(var(--header-switcher-width), 100%);
-            max-width: var(--header-switcher-width);
-            height: var(--header-control-height);
-            display: flex;
-            align-items: stretch;
-            margin-block: 0.075rem;
-        }
+#secondary-header-row .secondary-switcher {
+    flex-shrink: 0;
+    width: auto;
+    padding: 0.1rem;
+}
 
-        #primary-header-row .primary-switcher button,
-        #secondary-header-row .secondary-switcher button {
-            flex: 1 1 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+#secondary-header-row .secondary-switcher button {
+    display: flex;
+    flex-direction: column; /* Stack icon and label vertically */
+    align-items: center;
+    justify-content: center;
+    gap: 0.1rem;
+    font-size: 0.55rem; /* Smaller font size */
+    padding: 0.1rem 0.3rem; /* Reduced padding */
+    width: 50px; /* Set a fixed width */
+}
+#secondary-header-row .secondary-switcher button i {
+    font-size: 1rem; /* Smaller icon */
+}
+#secondary-header-row .secondary-switcher button span {
+    font-size: 0.5rem;
+    line-height: 1;
+    margin-top: -1px;
+}
 
-        #primary-header-row .menu-container,
-        #primary-header-row .username-area,
-        #secondary-header-row .analyzer-button-container,
-        #secondary-header-row .custom-select-wrapper,
-        .analyzer-button-slot,
-        .research-button-slot {
-            margin-block: 0.075rem;
-        }
 
-        #contextual-controls {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-        #contextual-controls.hidden {
-            display: none;
-        }
+/* ROW 3: Start/Sit, Filters */
+#filters-row {
+    justify-content: flex-start;
+}
+.start-sit-button-container {
+    flex-shrink: 0;
+}
+#startSitButton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--color-text-secondary);
+    font-size: 0.6rem;
+    gap: 0.1rem;
+}
+#startSitButton i {
+    font-size: 1.2rem;
+}
 
-        @media (min-width: 1024px) {
-            .header-quick-links {
-                display: flex;
-            }
+.filters-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    overflow-x: auto; /* Allow horizontal scrolling on small screens */
+}
 
-            #primary-header-row {
-                grid-template-columns: var(--header-icon-size) max-content minmax(120px, var(--header-field-max-width)) minmax(var(--header-switcher-width), 1fr);
-            }
+@media (max-width: 420px) {
+    .nav-button span {
+        font-size: 0.5rem;
+    }
+    .nav-button i {
+        font-size: 1rem;
+    }
+    .app-logo {
+        width: 36px;
+        height: 36px;
+    }
+}
 
-            .header-quick-links .analyzer-button,
-            .header-quick-links .research-button {
-                gap: 0.2rem;
-            }
 
-            #header-quick-links #analyzeLeagueButton,
-            #header-quick-links #analyzeLeagueButton.glow-on-select,
-            #header-quick-links #analyzeLeagueButton.active {
-                background: transparent !important;
-                border: none !important;
-                box-shadow: none !important;
-                color: var(--color-text-secondary);
-            }
+/* · · Ensure hidden truly hides views regardless of ID display rules · · */
+#playerListView.hidden, #rosterView.hidden { display: none !important; }
 
-            #header-quick-links #analyzeLeagueButton .analyzer-icon {
-            margin-top: 0 !important;
-            font-size: 1.3rem !important;            
-            }
-            
-            
+/* · · Row 2 · · */
+.username-area {
+    flex-grow: 1;
+    min-width: 100px; /* prevent it from getting too small */
+    max-width: var(--header-field-max-width);
+    padding: 0;
+    height: var(--header-control-height);
+    display: flex;
+    align-items: stretch;
+}
 
-            #header-quick-links #analyzeLeagueButton .analyzer-label {
-                margin-top: -2px !important;
-            }
+/* · · #usernameInput block · · */
+#usernameInput, #leagueSelect {
+    background: rgba(10, 12, 28, 0.5);
+    border: 1px solid rgba(128, 138, 189, 0.15);
+    border-radius: 8px;
+    -webkit-backdrop-filter: blur(6px) saturate(110%);
+    backdrop-filter: blur(6px) saturate(110%);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
+    color: var(--color-text-secondary);
+    padding: 0.23rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 400;
+    width: 100%;
+    height: 100%;
+    transition: all 0.2s ease;
+}
 
-            #header-quick-links #analyzeLeagueButton:hover .analyzer-icon,
-            #header-quick-links #analyzeLeagueButton:focus-visible .analyzer-icon {
-                color: var(--color-text-primary);
-            }
-        }
 
-  /* · · Ensure hidden truly hides views regardless of ID display rules · · */
-        #playerListView.hidden, #rosterView.hidden { display: none !important; }
-        
-        
-                /* · · Row 1 · · */
-                .username-area {
-                    flex-grow: 1;
-                    min-width: 100px; /* prevent it from getting too small */
-                    max-width: var(--header-field-max-width);
-                    padding: 0;
-                    height: var(--header-control-height);
-                    display: flex;
-                    align-items: stretch;
-                }
-                
-                /* · · #usernameInput block · · */
-        #usernameInput {
-          background: linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.1));
-          border: 1px solid var(--color-panel-border);
-          border-radius: 8px;
-          -webkit-backdrop-filter: blur(4px) saturate(110%);
-          backdrop-filter: blur(4px) saturate(110%);
-          box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
-          color: #c4c8eaba;
-          padding: 0.23rem 0.5rem;
-          font-size: 0.7rem;
-          font-weight: 300;
-          width: 100%;
-          height: 100%;
-          transition: all 0.2s ease;
-        }
-        
-        
-        #usernameInput::placeholder { 
-                    color: #5F6795aa !important;
-        }
-                
-                
-          /* · · Prevent browser autofill from turning the username bar white (Safari/Chrome) · · */
-        #usernameInput:-webkit-autofill,
-        #usernameInput:-webkit-autofill:hover,
-        #usernameInput:-webkit-autofill:focus {
-          -webkit-text-fill-color: #c4c8ea !important;
-          caret-color: #c4c8ea !important;  /* Overwrite the default yellow/white fill with a transparent inset */
-          -webkit-box-shadow: 0 0 0px 1000px rgba(13,14,35,0) inset !important;
-          box-shadow: 0 0 0px 1000px rgba(13,14,35,0) inset !important;
-          background-color: transparent !important;
-          border: 1px solid var(--color-panel-border) !important;
-          background-clip: padding-box !important;
-          transition: background-color 99999s ease-in-out 0s !important;
-        }
-        #usernameInput:focus {
-            outline: none;
-            border-color: var(--color-accent-primary);
-            box-shadow: 0 0 var(--glow-strength) var(--color-accent-primary-glow);
-        }
+#usernameInput::placeholder {
+    color: #5F6795aa !important;
+}
 
-        /* · · Row 2 · · */
-        .custom-select-wrapper {
-            position: relative;
-            flex-grow: 1;
-            min-width: 0;
-            max-width: var(--header-field-max-width);
-            height: var(--header-control-height);
-            display: flex;
-            align-items: stretch;
-            overflow: hidden;
-        }
-        #leagueSelect {
-            appearance: none;  /* EDITED: Increased transparency */
-            background: linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.1));
-            border: 1px solid var(--color-panel-border);
-            border-radius: 8px;
-            -webkit-backdrop-filter: blur(4px) saturate(110%);
-            backdrop-filter: blur(4px) saturate(110%);
-            box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
-            padding: 0.32rem 1.25rem 0.32rem 0.5rem;
-            font-size: 0.75rem;
-            color: #c4c8eaba;
-            font-weight: 300;
-            width: 100%;
-            height: 100%;
-            min-width: 0;
-            cursor: pointer;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        #leagueSelect:focus,
-        #leagueSelect:focus-visible,
-        .custom-select-wrapper:focus-within #leagueSelect {
-          outline: none !important;
-          box-shadow: inset 0 1px 1px rgba(255,255,255,0.05) !important; /* preserve glass inset */
-          border-color: var(--color-panel-border) !important;
-        }
-        .custom-select-wrapper::after {
-            content: '▼';
-            position: absolute;
-            top: 50%;
-            right: 0.5rem;
-            transform: translateY(-50%) scale(0.6);
-            color: var(--color-text-secondary);
-            pointer-events: none;
-        }
 
-        /* · · Row 3 · · */
-        #positional-filters {
-            /* This will no longer grow, allowing the parent to center it */
-            justify-content: center;
-        }
+  /* · · Prevent browser autofill from turning the username bar white (Safari/Chrome) · · */
+#usernameInput:-webkit-autofill,
+#usernameInput:-webkit-autofill:hover,
+#usernameInput:-webkit-autofill:focus {
+  -webkit-text-fill-color: #c4c8ea !important;
+  caret-color: #c4c8ea !important;  /* Overwrite the default yellow/white fill with a transparent inset */
+  -webkit-box-shadow: 0 0 0px 1000px rgba(13,14,35,0) inset !important;
+  box-shadow: 0 0 0px 1000px rgba(13,14,35,0) inset !important;
+  background-color: transparent !important;
+  border: 1px solid var(--color-panel-border) !important;
+  background-clip: padding-box !important;
+  transition: background-color 99999s ease-in-out 0s !important;
+}
+#usernameInput:focus {
+    outline: none;
+    border-color: var(--color-accent-primary);
+    box-shadow: 0 0 var(--glow-strength) var(--color-accent-primary-glow);
+}
+.custom-select-wrapper {
+    position: relative;
+    flex-grow: 1;
+    min-width: 0;
+    max-width: var(--header-field-max-width);
+    height: var(--header-control-height);
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+}
+#leagueSelect {
+    appearance: none;
+    padding-right: 1.5rem; /* Make space for arrow */
+}
+#leagueSelect:focus,
+#leagueSelect:focus-visible,
+.custom-select-wrapper:focus-within #leagueSelect {
+  outline: none !important;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.05) !important; /* preserve glass inset */
+  border-color: var(--color-panel-border) !important;
+}
+.custom-select-wrapper::after {
+    content: '▼';
+    position: absolute;
+    top: 50%;
+    right: 0.5rem;
+    transform: translateY(-50%) scale(0.6);
+    color: var(--color-text-secondary);
+    pointer-events: none;
+}
+
+/* · · Row 3 · · */
+#positional-filters {
+    /* This will no longer grow, allowing the parent to center it */
+    justify-content: center;
+}
 
 /* ⬇︎  HIGH-END GLASS BUTTONS & SEGMENTED CONTROLS V3  ⬇︎ */
-        .primary-switcher, .secondary-switcher, #positional-filters {
-            display: flex;
-            border: 1px solid var(--color-panel-border);
-            border-radius: 8px;
-            padding: 0.1rem 0.12rem;
-            gap: 0.15rem;
-            flex-shrink: 0;
-       }
-		.primary-switcher {           
-            background: linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.1));
-            box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
-        }
-		.secondary-switcher {           
-            background: linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.1));
-            box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
-        }
-		#positional-filters {           
-            background: linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.1));
-            box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
-        }
+.secondary-switcher, #positional-filters {
+    display: flex;
+    border: 1px solid var(--color-panel-border);
+    border-radius: 8px;
+    padding: 0.1rem 0.12rem;
+    gap: 0.15rem;
+    flex-shrink: 0;
+}
+.secondary-switcher {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.1));
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
+}
+#positional-filters {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.1));
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
+}
 
 
 /* ⬇︎ MAIN BUTTON STYLES  ⬇︎ */
-        .primary-switcher button {
-            padding: 0.12rem 0.55rem;
-            font-size: 0.85rem;
-            font-weight: 400;
-            border: 1px solid transparent;
-            background: transparent;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-            color: var(--color-text-secondary);
-            text-shadow: 0 0 2px rgba(0,0,0,0.2);
-        }
-        .secondary-switcher button, .filter-btn {
-            padding: 0.12rem 0.55rem;
-            font-size: 0.85rem;
-            font-weight: 400;
-            border: 1px solid transparent;
-            background: transparent;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-            color: var(--color-text-secondary);
-            text-shadow: 0 0 2px rgba(0,0,0,0.2);
-        }
-        .filter-btn {
-            padding: 0.15rem 0.6rem;
-            font-size: 0.85rem;
-            font-weight: 400;
-            border: 1px solid transparent;
-            background: transparent;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-            color: var(--color-text-secondary);
-            text-shadow: 0 0 2px rgba(0,0,0,0.2);
-        }
+.secondary-switcher button, .filter-btn {
+    padding: 0.12rem 0.55rem;
+    font-size: 0.85rem;
+    font-weight: 400;
+    border: 1px solid transparent;
+    background: transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    color: var(--color-text-secondary);
+    text-shadow: 0 0 2px rgba(0,0,0,0.2);
+}
+.filter-btn {
+    padding: 0.15rem 0.6rem;
+    font-size: 0.85rem;
+    font-weight: 400;
+    border: 1px solid transparent;
+    background: transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    color: var(--color-text-secondary);
+    text-shadow: 0 0 2px rgba(0,0,0,0.2);
+}
 
-        
-        /* · · Primary buttons are bolder · · */
-        .primary-switcher button {
-            font-weight: 400;
-            font-size: 0.9rem;
-        }
 
-        /* · · Hover States · · */
-        .primary-switcher button:hover, .secondary-switcher button:hover, .filter-btn:hover {
-            color: var(--color-text-primary);
-            background: var(--color-panel-bg);
-        }
+/* · · Hover States · · */
+.secondary-switcher button:hover, .filter-btn:hover {
+    color: var(--color-text-primary);
+    background: var(--color-panel-bg);
+}
 
-        /* · · Active & Counterpart States (EDITED) · · */
+/* · · Active & Counterpart States (EDITED) · · */
+#positionalViewBtn.active {
+    color: #D8E2FFEE;
+    border-color: var(--color-accent-primary); /* Purple */
+    box-shadow: 0 0 8px var(--color-accent-primary-glow);
+}
 
-        #fetchRostersButton.active {
-            color: #D8F2FFEE;
-            border-color: var(--color-accent-secondary); /* Blue */
-            box-shadow: 0 0 8px var(--color-accent-secondary-glow);
-        }
+#lineupViewBtn.active {
+    color: #c4c8ea;
+    border-color: var(--color-accent-trade-win); /* Green */
+    box-shadow: 0 0 8px rgba(0, 245, 160, 0.5);
+}
 
-        #fetchOwnershipButton.active {
-            color: #c4c8ea;
-            border-color: #D90059; /* Pink */
-            box-shadow: 0 0 8px #D90059;
-        }
+/* · · Counterpart buttons are dimmed · · */
+.secondary-switcher button.counterpart-active {
+    color: var(--color-text-tertiary);
+    background: transparent;
+}
+.secondary-switcher button.counterpart-active:hover {
+    color: var(--color-text-secondary);
+}
 
-        #positionalViewBtn.active {
-            color: #D8E2FFEE;
-            border-color: var(--color-accent-primary); /* Purple */
-            box-shadow: 0 0 8px var(--color-accent-primary-glow);
-        }
+/* · · Filter Buttons · · */
+.filter-btn.active[data-position="QB"] {
+  color: #FF3A75da;
+  box-shadow: inset 0 0 7px #FF3A7527;
+}
 
-        #depthChartViewBtn.active {
-            color: #c4c8ea;
-            border-color: var(--color-accent-trade-win); /* Green */
-            box-shadow: 0 0 8px rgba(0, 245, 160, 0.5);
-        }
+.filter-btn.active[data-position="RB"] {
+  color: #00EBC7da;
+  box-shadow: inset 0 0 7px #00EBC727;
+}
 
-        /* · · Counterpart buttons are dimmed · · */
-        .primary-switcher button.counterpart-active, .secondary-switcher button.counterpart-active {
-            color: var(--color-text-tertiary);
-            background: transparent;
-        }
-        .primary-switcher button.counterpart-active:hover, .secondary-switcher button.counterpart-active:hover {
-            color: var(--color-text-secondary);
-        }
+.filter-btn.active[data-position="WR"] {
+  color: #58A7FF;
+  box-shadow: inset 0 0 7px #58A7FF35;
+}
 
-        /* · · Filter Buttons · · */
-       .filter-btn.active[data-position="QB"] {
-      color: #FF3A75da;
-      box-shadow: inset 0 0 7px #FF3A7527;
-    }
-    
-    .filter-btn.active[data-position="RB"] {
-      color: #00EBC7da;
-      box-shadow: inset 0 0 7px #00EBC727;
-    }
-    
-    .filter-btn.active[data-position="WR"] {
-      color: #58A7FF;
-      box-shadow: inset 0 0 7px #58A7FF35;
-    }
-    
-    .filter-btn.active[data-position="TE"] {
-      color: #B469FF;
-      box-shadow: inset 0 0 7px #B469FF35;
-    }
-    
-    .filter-btn.active[data-position="FLX"] {
-      color: #ba6597;
-      box-shadow: inset 0 0 7px #ba659727;
-    }        
-        .filter-btn.active {    
-        position: relative;
-        background: rgba(0, 0, 0, 0.02);
-        backdrop-filter: blur(1px) saturate(180%);
-        border: 1px solid rgba(250, 250, 250, 0.09);
-        border-radius: 7px;
-        box-shadow: 0 1px 5px rgba(31, 38, 105, 0.01), inset 0 3px 10px rgba(255, 255, 255, 0.013);
-    }
-    /* AFTER */
-    .filter-btn.active::after {    
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(255, 255, 255, 0.01);
-        border-radius: 7px;
-        backdrop-filter: blur(1px);
-        box-shadow: inset 5px 6px 0px -4px rgba(255, 255, 255, .05),
-        inset 0px 4px 0px -3px rgba(255, 255, 255, .051);
-        opacity: 0.4;
-        z-index: -1;
-        filter: blur(1px) brightness(100%);
-        pointer-events: none;
-    
-    }
-    
-    .filter-btn {
-        margin-left: 2px;
-    }    
-        
-        
-        
+.filter-btn.active[data-position="TE"] {
+  color: #B469FF;
+  box-shadow: inset 0 0 7px #B469FF35;
+}
+
+.filter-btn.active[data-position="FLX"] {
+  color: #ba6597;
+  box-shadow: inset 0 0 7px #ba659727;
+}
+.filter-btn.active {
+    position: relative;
+    background: rgba(0, 0, 0, 0.02);
+    backdrop-filter: blur(1px) saturate(180%);
+    border: 1px solid rgba(250, 250, 250, 0.09);
+    border-radius: 7px;
+    box-shadow: 0 1px 5px rgba(31, 38, 105, 0.01), inset 0 3px 10px rgba(255, 255, 255, 0.013);
+}
+/* AFTER */
+.filter-btn.active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.01);
+    border-radius: 7px;
+    backdrop-filter: blur(1px);
+    box-shadow: inset 5px 6px 0px -4px rgba(255, 255, 255, .05),
+    inset 0px 4px 0px -3px rgba(255, 255, 255, .051);
+    opacity: 0.4;
+    z-index: -1;
+    filter: blur(1px) brightness(100%);
+    pointer-events: none;
+
+}
+
+.filter-btn {
+    margin-left: 2px;
+}
+
+
+
 /* · ·  Preview Button • Ctrl Button  · · */
-        .control-button {
-            padding: 0.29rem 0.6rem;
-            font-size: 0.8rem;
-            font-weight: 500;
-            border: 1px solid var(--color-panel-border);  /* EDITED: Increased transparency */
-            background: linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.1))!important;
-            box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-            color: var(--color-text-secondary);
-        }
-        #compareButton {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 4px;
-        }
-        .control-button.glow-on-select {
-            box-shadow: 0 0 8px #7300ff;
-            color: #eeeeee;
-            border: 1px solid #4E00DA;
-        }
-        
-    /* · · Show All Button · · */
-        .control-button.active {
-            color: #BDC1D8ca; 
-            border: 1px solid #833fff39;
-            box-shadow: inset 0 0 10px #7310ff29, 0 0 3px #7310ff40;
-            text-shadow: 
-                0 0 3px rgba(43, 0, 255, 0.5),
-                0 0 5px rgba(73, 0, 255, 0.2);
-        }
-        
-        .control-button:disabled {
-            background: linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.1))!important;
-            box-shadow: inset 0 1px 2px rgba(200,200,200,0.08) !important;
-            color: var(--color-text-tertiary) !important;
-            cursor: not-allowed;
-            border-color: var(--color-panel-border) !important;
-        }
-        .control-button-subtle {
-            background: none;
-            border: none;
-            color: #5F679572;
-            text-decoration: underline;
-            font-size: 0.75rem;
-            cursor: pointer;
-            padding: 0;
-            transition: color 0.2s ease;
-        }
+.control-button {
+    padding: 0.29rem 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: 1px solid var(--color-panel-border);  /* EDITED: Increased transparency */
+    background: linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.1))!important;
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    color: var(--color-text-secondary);
+}
+#compareButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 4px;
+}
+.control-button.glow-on-select {
+    box-shadow: 0 0 8px #7300ff;
+    color: #eeeeee;
+    border: 1px solid #4E00DA;
+}
 
-        .control-button-subtle.active {
-            color: var(--color-text-secondary);
-        }
+/* · · Show All Button · · */
+.control-button.active {
+    color: #BDC1D8ca;
+    border: 1px solid #833fff39;
+    box-shadow: inset 0 0 10px #7310ff29, 0 0 3px #7310ff40;
+    text-shadow:
+        0 0 3px rgba(43, 0, 255, 0.5),
+        0 0 5px rgba(73, 0, 255, 0.2);
+}
+
+.control-button:disabled {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.1))!important;
+    box-shadow: inset 0 1px 2px rgba(200,200,200,0.08) !important;
+    color: var(--color-text-tertiary) !important;
+    cursor: not-allowed;
+    border-color: var(--color-panel-border) !important;
+}
+.control-button-subtle {
+    background: none;
+    border: none;
+    color: #5F679572;
+    text-decoration: underline;
+    font-size: 0.75rem;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s ease;
+}
+
+.control-button-subtle.active {
+    color: var(--color-text-secondary);
+}
 
 
-    /*  Show All Button cont.. */
+/*  Show All Button cont.. */
 
-        #compareButton.compare-show-all {
-            align-items: center;
-            justify-content: center;
-        }
+#compareButton.compare-show-all {
+    align-items: center;
+    justify-content: center;
+}
 
-        #compareButton .compare-show-all-stack {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            line-height: 1;
-            gap: 0;
-            padding-top: 0px !important;
-            padding-bottom: 0px !important;
-        }
+#compareButton .compare-show-all-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    gap: 0;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
 
-        #compareButton .compare-show-all-icon {
-            display: block;
-            margin: 0;
-            font-size: 1.25rem;
-            line-height: 1;
-        }
+#compareButton .compare-show-all-icon {
+    display: block;
+    margin: 0;
+    font-size: 1.25rem;
+    line-height: 1;
+}
 
-        #compareButton .compare-show-all-label {
-            display: block;
-            margin: -2px 0 0 0;
-            font-size: 0.5rem;
-            font-weight: 300;
-            line-height: 1;
-        }
-
-@media (max-width: 819px) {
-  .app-header.preview-active > .header-row:first-of-type {
-    display: none;
-  }
+#compareButton .compare-show-all-label {
+    display: block;
+    margin: -2px 0 0 0;
+    font-size: 0.5rem;
+    font-weight: 300;
+    line-height: 1;
 }
 /* ⬇︎ ROSTER VIEW  ⬇︎ */
         #rosterContainer { 
@@ -1484,10 +1381,10 @@
             z-index: 5;
             flex-shrink: 0;
         }
-        #playerSearch:focus {
+#usernameInput:focus, #leagueSelect:focus {
             outline: none;
             border-color: var(--color-accent-primary);
-            box-shadow: 0 0 var(--glow-strength) var(--color-accent-primary-glow);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.2), 0 0 8px var(--color-accent-primary-glow);
         }
         #playerSearch::placeholder { 
             color: var(--color-text-secondary); 
@@ -1671,47 +1568,51 @@
         /* · · Responsive Header Layout · · */
 
         @media (min-width: 820px) {
-            .app-header {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                align-items: center;
-                gap: 0.5rem;
-                padding: 0.25rem 0.5rem;
-            }
+    .app-header {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
 
-            #contextual-controls {
-                display: contents;
-            }
+    .header-row {
+        width: auto;
+        flex-grow: 1;
+        justify-content: center;
+    }
 
-            .header-row {
-                width: auto;
-                border-top: none !important;
-                padding-top: 0 !important;
-                padding-bottom: 0 !important;
-            }
-            
-            #contextual-controls .header-row:has(#positional-filters) {
-                flex-basis: 100%;
-                justify-content: center;
-                margin-top: 0.25rem;
-            }
+    #primary-header-row {
+        flex-grow: 0;
+        gap: 0.5rem;
+    }
 
-            #contextual-controls .header-row:has(.research-button-container) {
-                /* This will make the row containing filters and compare buttons take only the space it needs */
-                width: auto;
-                flex-grow: 0;
-            }
+    .nav-buttons-container {
+        flex-grow: 0;
+    }
 
-            #positional-filters {
-                flex-grow: 0; /* Prevents the filter group from expanding */
-            }
+    .nav-button {
+        width: auto;
+        min-width: 60px;
+    }
 
-            .username-area, .custom-select-wrapper {
-                flex-grow: 0;
-                max-width: 220px;
-            }
-        }
+    #secondary-header-row {
+        flex-grow: 1;
+        justify-content: center;
+        gap: 0.75rem;
+    }
+
+    #secondary-header-row .username-area,
+    #secondary-header-row .custom-select-wrapper {
+        max-width: 200px;
+    }
+
+    #filters-row {
+        flex-grow: 1;
+        justify-content: flex-end;
+    }
+}
 
     
 
