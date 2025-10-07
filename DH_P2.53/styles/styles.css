@@ -6,6 +6,7 @@
         --color-bg: #0D0E1B;
         --color-bg-light: #1E1F30;
         --color-panel-bg: rgba(22, 24, 43, 0.1);
+        --roster-card-blur: 1px;
         --color-panel-border: rgba(128, 138, 189, 0.2);
         --color-panel-border-glow: rgba(128, 138, 189, 0.4);
     
@@ -904,12 +905,10 @@
             gap: 0.25rem;
         }
 
-@media (min-width: 820px) {
-  @supports (content-visibility: auto) {
-    #rosterGrid .team-card {
-        content-visibility: auto;
-        contain-intrinsic-size: auto var(--team-card-intrinsic-size, 1200px);
-    }
+@supports (content-visibility: auto) {
+  #rosterGrid.roster-cv-enabled .team-card {
+      content-visibility: auto;
+      contain-intrinsic-size: auto var(--team-card-intrinsic-size, 1200px);
   }
 }
 
@@ -988,10 +987,20 @@
             flex-direction: column;
             gap: 0.01rem;
             transition: all 0.2s ease;
-            backdrop-filter: blur(1px);
-            -webkit-backdrop-filter: blur(1px);
+            backdrop-filter: blur(var(--roster-card-blur));
+            -webkit-backdrop-filter: blur(var(--roster-card-blur));
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
         }
+
+@media (min-width: 820px) {
+  .player-row,
+  .pick-row {
+      --roster-card-blur: 0px;
+      background: rgba(22, 24, 43, 0.35);
+      box-shadow: 0 12px 28px rgba(7, 10, 25, 0.32);
+      contain: paint;
+  }
+}
         .is-trade-mode .player-row, .is-trade-mode .pick-row { 
             cursor: pointer; 
         }
@@ -3432,26 +3441,21 @@ body[data-page="rosters"] #secondary-header-row #analyzeLeagueButton.active {
 
     #modal-body tbody .week-cell {
         font-weight: 700;
-        text-align: left;
+        text-align: center;
         white-space: nowrap;
-    }
-
-    .week-cell .week-number,
-    .week-opponent-label,
-    .week-opponent-separator {
-        display: inline-block;
         vertical-align: middle;
     }
 
-    .week-opponent-separator {
-        font-weight: 700;
+    .week-cell .week-number,
+    .week-opponent-label {
+        display: block;
+        line-height: 1;
     }
 
     .week-opponent-label {
         font-size: 0.7em;
-        line-height: 1.1;
-        margin-left: 0.1em;
         font-weight: 600;
+        margin-top: 0.1em;
     }
 
 /* · · Table Footer · · */
