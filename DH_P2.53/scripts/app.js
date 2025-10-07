@@ -5,11 +5,7 @@ function showLegend(){ try{ document.getElementById('legend-section')?.classList
 
         // --- DOM Elements ---
         const usernameInput = document.getElementById('usernameInput');
-        const fetchRostersButton = document.getElementById('fetchRostersButton');
-        const fetchOwnershipButton = document.getElementById('fetchOwnershipButton');
         const leagueSelect = document.getElementById('leagueSelect');
-        const contextualControls = document.getElementById('contextual-controls');
-        const rosterControls = document.getElementById('rosterControls');
         const loadingIndicator = document.getElementById('loading');
         const welcomeScreen = document.getElementById('welcome-screen');
         const rosterView = document.getElementById('rosterView');
@@ -26,19 +22,19 @@ function showLegend(){ try{ document.getElementById('legend-section')?.classList
         const compareSearchInput   = document.getElementById('compareSearchInput');
         const compareSearchClose   = document.getElementById('compareSearchClose');
         const positionalViewBtn = document.getElementById('positionalViewBtn');
-        const depthChartViewBtn = document.getElementById('depthChartViewBtn');
-        const viewControls = document.getElementById('view-controls');
+        const lineupViewBtn = document.getElementById('lineupViewBtn');
         const positionalFiltersContainer = document.getElementById('positional-filters');
         const clearFiltersButton = document.getElementById('clearFiltersButton');
         const tradeSimulator = document.getElementById('tradeSimulator');
         const mainContent = document.getElementById('content');
         const pageType = document.body.dataset.page || 'welcome';
-        const researchButton = document.getElementById('researchButton');
-        const headerQuickLinks = document.getElementById('header-quick-links');
-        const analyzerButtonSlot = document.getElementById('analyzer-button-slot');
-        const researchButtonSlot = document.getElementById('research-button-slot');
-        const analyzerButtonContainer = analyzerButtonSlot?.querySelector('.analyzer-button-container') || null;
-        const researchButtonContainer = researchButtonSlot?.querySelector('.research-button-container') || null;
+
+        // New Nav Buttons
+        const navRosters = document.getElementById('nav-rosters');
+        const navOwnership = document.getElementById('nav-ownership');
+        const navAnalyzer = document.getElementById('nav-analyzer');
+        const navResearch = document.getElementById('nav-research');
+        const startSitButton = document.getElementById('startSitButton');
 
         const gameLogsModal = document.getElementById('game-logs-modal');
         const modalCloseBtn = document.querySelector('.modal-close-btn');
@@ -84,143 +80,52 @@ function showLegend(){ try{ document.getElementById('legend-section')?.classList
             compareButton.innerHTML = COMPARE_BUTTON_PREVIEW_HTML;
         }
 
-        // --- Menu Button ---
-        const menuButton = document.getElementById('menu-button');
-        const dropdownMenu = document.getElementById('dropdown-menu');
-        const menuRosters = document.getElementById('menu-rosters');
-        const menuOwnership = document.getElementById('menu-ownership');
-        const menuAnalyzer = document.getElementById('menu-analyzer');
-        const menuResearch = document.getElementById('menu-research');
-        const analyzeLeagueButton = document.getElementById('analyzeLeagueButton');
-        const resolveResearchUrl = () => {
+        // --- New Navigation Logic ---
+        const resolveUrl = (page) => {
             const username = usernameInput.value.trim();
             const suffix = username ? `?username=${encodeURIComponent(username)}` : '';
+
+            let baseUrl;
             if (pageType === 'welcome') {
-                return `research/research.html${suffix}`;
+                baseUrl = `${page}/${page}.html${suffix}`;
+            } else {
+                baseUrl = `../${page}/${page}.html${suffix}`;
             }
-            if (pageType === 'research') {
-                return `research/research.html${suffix}`;
+
+            if (page === 'rosters' || page === 'analyzer' || page === 'ownership') {
+                 const selected = leagueSelect?.value;
+                if (selected && selected !== 'Select a league...') {
+                    baseUrl += `&leagueId=${selected}`;
+                } else if (state.currentLeagueId) {
+                    baseUrl += `&leagueId=${state.currentLeagueId}`;
+                }
             }
-            return `../research/research.html${suffix}`;
-        };
+            return baseUrl;
+        }
 
-        menuButton?.addEventListener('click', (e) => {
-            e.stopPropagation();
-            dropdownMenu.classList.toggle('hidden');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (dropdownMenu && !dropdownMenu.classList.contains('hidden') && !menuButton.contains(e.target)) {
-                dropdownMenu.classList.add('hidden');
-            }
-        });
-
-        menuRosters?.addEventListener('click', () => {
-            const username = usernameInput.value.trim();
-            if (!username) return;
+        navRosters?.addEventListener('click', () => {
             if (pageType === 'rosters') {
                 handleFetchRosters();
             } else {
-                let url = pageType === 'welcome'
-                    ? `rosters/rosters.html?username=${encodeURIComponent(username)}`
-                    : `../rosters/rosters.html?username=${encodeURIComponent(username)}`;
-                const selected = leagueSelect?.value;
-                if (selected && selected !== 'Select a league...') {
-                    url += `&leagueId=${selected}`;
-                } else if (state.currentLeagueId) {
-                    url += `&leagueId=${state.currentLeagueId}`;
-                }
-                window.location.href = url;
+                window.location.href = resolveUrl('rosters');
             }
-            dropdownMenu.classList.add('hidden');
         });
 
-        menuAnalyzer?.addEventListener('click', () => {
-            const username = usernameInput.value.trim();
-            if (!username) return;
-            let url = pageType === 'welcome'
-                ? `analyzer/analyzer.html?username=${encodeURIComponent(username)}`
-                : `../analyzer/analyzer.html?username=${encodeURIComponent(username)}`;
-            const selected = leagueSelect?.value || state.currentLeagueId;
-            if (selected && selected !== 'Select a league...') {
-                url += `&leagueId=${selected}`;
-            }
-            window.location.href = url;
-            dropdownMenu.classList.add('hidden');
-        });
-
-        analyzeLeagueButton?.addEventListener('click', () => {
-            const username = usernameInput.value.trim();
-            if (!username || !state.currentLeagueId) return;
-            window.location.href = `../analyzer/analyzer.html?username=${encodeURIComponent(username)}&leagueId=${state.currentLeagueId}`;
-        });
-
-        menuOwnership?.addEventListener('click', () => {
-            const username = usernameInput.value.trim();
-            if (!username) return;
+        navOwnership?.addEventListener('click', () => {
             if (pageType === 'ownership') {
                 handleFetchOwnership();
             } else {
-                let url = pageType === 'welcome'
-                    ? `ownership/ownership.html?username=${encodeURIComponent(username)}`
-                    : `../ownership/ownership.html?username=${encodeURIComponent(username)}`;
-                const selected = leagueSelect?.value;
-                if (selected && selected !== 'Select a league...') {
-                    url += `&leagueId=${selected}`;
-                } else if (state.currentLeagueId) {
-                    url += `&leagueId=${state.currentLeagueId}`;
-                }
-                window.location.href = url;
+                window.location.href = resolveUrl('ownership');
             }
-            dropdownMenu.classList.add('hidden');
         });
 
-        menuResearch?.addEventListener('click', () => {
-            if (pageType === 'research') {
-                dropdownMenu.classList.add('hidden');
-                return;
-            }
-            const url = resolveResearchUrl();
-            window.location.href = url;
-            dropdownMenu.classList.add('hidden');
+        navAnalyzer?.addEventListener('click', () => {
+             window.location.href = resolveUrl('analyzer');
         });
 
-        researchButton?.addEventListener('click', () => {
-            if (pageType === 'research') {
-                return;
-            }
-            const url = resolveResearchUrl();
-            window.location.href = url;
+        navResearch?.addEventListener('click', () => {
+            window.location.href = resolveUrl('research');
         });
-
-        if (headerQuickLinks && analyzerButtonSlot && researchButtonSlot && analyzerButtonContainer && researchButtonContainer) {
-            const quickLinksQuery = window.matchMedia('(min-width: 1024px)');
-            const placeQuickLinks = (isDesktop) => {
-                if (isDesktop) {
-                    if (!headerQuickLinks.contains(researchButtonContainer)) {
-                        headerQuickLinks.appendChild(researchButtonContainer);
-                    }
-                    if (!headerQuickLinks.contains(analyzerButtonContainer)) {
-                        headerQuickLinks.appendChild(analyzerButtonContainer);
-                    }
-                } else {
-                    if (!analyzerButtonSlot.contains(analyzerButtonContainer)) {
-                        analyzerButtonSlot.appendChild(analyzerButtonContainer);
-                    }
-                    if (!researchButtonSlot.contains(researchButtonContainer)) {
-                        researchButtonSlot.appendChild(researchButtonContainer);
-                    }
-                }
-            };
-
-            placeQuickLinks(quickLinksQuery.matches);
-            const quickLinksListener = (event) => placeQuickLinks(event.matches);
-            if (typeof quickLinksQuery.addEventListener === 'function') {
-                quickLinksQuery.addEventListener('change', quickLinksListener);
-            } else if (typeof quickLinksQuery.addListener === 'function') {
-                quickLinksQuery.addListener(quickLinksListener);
-            }
-        }
 
         // --- State ---
         let state = { userId: null, leagues: [], players: {}, oneQbData: {}, sflxData: {}, currentLeagueId: null, isSuperflex: false, cache: {}, teamsToCompare: new Set(), isCompareMode: false, currentRosterView: 'positional', activePositions: new Set(), tradeBlock: {}, isTradeCollapsed: false, weeklyStats: {}, playerSeasonStats: {}, playerSeasonRanks: {}, playerWeeklyStats: {}, statsSheetsLoaded: false, seasonRankCache: null, isGameLogModalOpenFromComparison: false, liveWeeklyStats: {}, liveStatsLoaded: false, currentNflSeason: null, currentNflWeek: null, calculatedRankCache: null };
@@ -261,44 +166,6 @@ function showLegend(){ try{ document.getElementById('legend-section')?.classList
         };
 
         // --- Event Listeners ---
-        if (pageType === 'welcome') {
-            fetchRostersButton?.addEventListener('click', () => {
-                const username = usernameInput.value.trim();
-                if (!username) return;
-                window.location.href = `rosters/rosters.html?username=${encodeURIComponent(username)}`;
-            });
-            fetchOwnershipButton?.addEventListener('click', () => {
-                const username = usernameInput.value.trim();
-                if (!username) return;
-                window.location.href = `ownership/ownership.html?username=${encodeURIComponent(username)}`;
-            });
-        } else if (pageType === 'research') {
-            fetchRostersButton?.addEventListener('click', () => {
-                const username = usernameInput.value.trim();
-                if (!username) return;
-                window.location.href = `../rosters/rosters.html?username=${encodeURIComponent(username)}`;
-            });
-            fetchOwnershipButton?.addEventListener('click', () => {
-                const username = usernameInput.value.trim();
-                if (!username) return;
-                window.location.href = `../ownership/ownership.html?username=${encodeURIComponent(username)}`;
-            });
-        } else if (pageType === 'rosters') {
-            fetchRostersButton?.addEventListener('click', handleFetchRosters);
-            fetchOwnershipButton?.addEventListener('click', () => {
-                const username = usernameInput.value.trim();
-                if (!username) return;
-                window.location.href = `../ownership/ownership.html?username=${encodeURIComponent(username)}`;
-            });
-        } else if (pageType === 'ownership') {
-            fetchOwnershipButton?.addEventListener('click', handleFetchOwnership);
-            fetchRostersButton?.addEventListener('click', () => {
-                const username = usernameInput.value.trim();
-                if (!username) return;
-                window.location.href = `../rosters/rosters.html?username=${encodeURIComponent(username)}`;
-            });
-        }
-
         if (pageType === 'rosters') {
             leagueSelect?.addEventListener('change', (e) => {
                 handleLeagueSelect(e);
@@ -327,7 +194,7 @@ function showLegend(){ try{ document.getElementById('legend-section')?.classList
 
             compareButton?.addEventListener('click', handleCompareClick);
             positionalViewBtn?.addEventListener('click', () => setRosterView('positional'));
-            depthChartViewBtn?.addEventListener('click', () => setRosterView('depth'));
+            lineupViewBtn?.addEventListener('click', () => setRosterView('lineup'));
             positionalFiltersContainer?.addEventListener('click', handlePositionFilter);
             clearFiltersButton?.addEventListener('click', handleClearFilters);
 
@@ -377,7 +244,7 @@ function showLegend(){ try{ document.getElementById('legend-section')?.classList
             const uname = params.get('username');
             if (uname) {
                 usernameInput.value = uname;
-                if (pageType === 'rosters') {
+                 if (pageType === 'rosters') {
                     await handleFetchRosters();
                 } else if (pageType === 'ownership') {
                     await handleFetchOwnership();
@@ -387,32 +254,23 @@ function showLegend(){ try{ document.getElementById('legend-section')?.classList
 
         // --- View Toggling and Main Handlers ---
         function setRosterView(view) {
-    closeComparisonModal();
-    hideLegend();
+            closeComparisonModal();
+            hideLegend();
             state.currentRosterView = view;
             const isPositional = view === 'positional';
             positionalViewBtn.classList.toggle('active', isPositional);
-            depthChartViewBtn.classList.toggle('active', !isPositional);
+            lineupViewBtn.classList.toggle('active', !isPositional);
 
             positionalViewBtn.classList.toggle('counterpart-active', !isPositional);
-            depthChartViewBtn.classList.toggle('counterpart-active', isPositional);
+            lineupViewBtn.classList.toggle('counterpart-active', isPositional);
 
             if (state.currentTeams) {
                 renderAllTeamData(state.currentTeams);
             }
         }
 
-        function updateButtonStates(activeButton) {
-            const isRosters = activeButton === 'rosters';
-            fetchRostersButton.classList.toggle('active', isRosters);
-            fetchOwnershipButton.classList.toggle('active', !isRosters);
-
-            fetchRostersButton.classList.toggle('counterpart-active', !isRosters);
-            fetchOwnershipButton.classList.toggle('counterpart-active', isRosters);
-        }
-
         async function handleFetchRosters() {
-    hideLegend();
+            hideLegend();
             const username = usernameInput.value.trim();
             if (!username) return;
             
@@ -423,8 +281,6 @@ function showLegend(){ try{ document.getElementById('legend-section')?.classList
                 const leagues = await fetchUserLeagues(state.userId);
                 state.leagues = leagues.sort((a, b) => a.name.localeCompare(b.name));
                 
-                updateButtonStates('rosters');
-                contextualControls.classList.remove('hidden');
                 adjustStickyHeaders(); // Recalculate header height for correct padding
                 playerListView.classList.add('hidden');
                 rosterView.classList.remove('hidden');
@@ -443,8 +299,6 @@ function showLegend(){ try{ document.getElementById('legend-section')?.classList
                         leagueSelect.selectedIndex = 1;
                         await handleLeagueSelect();
                     }
-                } else {
-                    contextualControls.classList.add('hidden');
                 }
             } catch (error) {
                 handleError(error, username);
@@ -462,8 +316,6 @@ function showLegend(){ try{ document.getElementById('legend-section')?.classList
             try {
                 await fetchAndSetUser(username);
                 
-                updateButtonStates('ownership');
-                contextualControls.classList.add('hidden');
                 rosterView.classList.add('hidden');
                 playerListView.classList.remove('hidden');
 
@@ -4185,16 +4037,22 @@ function setLoading(isLoading, message = 'Loading...') {
     if (document.body?.dataset?.page === 'rosters') {
         adjustStickyHeaders();
     }
-    const buttons = [fetchRostersButton, fetchOwnershipButton].filter(Boolean);
+    const buttons = [navRosters, navOwnership, navAnalyzer, navResearch, startSitButton].filter(Boolean);
     if (isLoading) {
         const msgEl = loadingIndicator.querySelector('.loading-message'); if (msgEl) { msgEl.textContent = message; } else { loadingIndicator.textContent = message; }
         loadingIndicator.classList.remove('hidden');
-        buttons.forEach(btn => { btn.disabled = true; btn.classList.add('opacity-50', 'cursor-not-allowed'); });
+        buttons.forEach(btn => {
+            btn.style.pointerEvents = 'none';
+            btn.classList.add('opacity-50');
+        });
     } else {
         loadingIndicator.classList.add('hidden');
-        buttons.forEach(btn => { btn.disabled = false; btn.classList.remove('opacity-50', 'cursor-not-allowed'); });
+        buttons.forEach(btn => {
+            btn.style.pointerEvents = '';
+            btn.classList.remove('opacity-50');
+        });
     }
-        }
+}
 
         function handleError(error, username) {
             console.error(`Error for user ${username}:`, error);
@@ -4254,7 +4112,7 @@ function setLoading(isLoading, message = 'Loading...') {
   input.addEventListener('keydown', e => { if (e.key === 'Enter') { persistNormalized(); resetIOSZoom(); }});
 
   // Hook buttons (capture) so normalization executes before fetch handlers, then reset zoom
-  ['fetchRostersButton','fetchOwnershipButton'].forEach(id => {
+  ['nav-rosters', 'nav-ownership', 'nav-analyzer', 'nav-research'].forEach(id => {
     const el = document.getElementById(id);
     if (!el) return;
     el.addEventListener('click', () => { persistNormalized(); resetIOSZoom(); }, { capture: true });

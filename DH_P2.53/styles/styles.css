@@ -247,235 +247,206 @@
         border-radius: 10px;
         box-shadow: rgba(255, 255, 255, 0.05) 0px 0px 0px 0px inset, rgba(200, 200, 200, 0.025) 0px 0px 0px 3px inset, rgba(0, 0, 0, 0.22) 0px 10px 26px 0px;
         }
-/* ⬇︎  HEADER & CONTROLS (3-ROW REDESIGN)  ⬇︎ */
-        .app-header {
-            padding: 0.25rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-            --header-icon-size: 2.25rem;
-            --header-control-height: 2.2rem;
-            --header-field-max-width: 160px;
-            --header-switcher-width: 12.25rem;
-        }
+/* ⬇︎  HEADER & CONTROLS (NEW 3-ROW DESIGN)  ⬇︎ */
+.app-header {
+    padding: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem; /* Reduced gap between rows */
+}
 
-        .header-row {
-            display: flex;
-            flex-wrap: nowrap; /* Prevent wrapping */
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            width: 100%;
-            padding-bottom: 2px; /* space for scrollbar */
-        }
+.header-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    min-height: 44px; /* Ensure rows have a consistent minimum height */
+}
 
-        .app-header > .header-row:first-of-type,
-        #contextual-controls .header-row:first-child {
-            display: grid;
-            grid-template-columns: var(--header-icon-size) minmax(120px, var(--header-field-max-width)) minmax(var(--header-switcher-width), 1fr);
-            align-items: center;
-            gap: 0.5rem;
-            padding-left: 0.25rem;
-            padding-right: 0.25rem;
-        }
+/* Row 1: Logo and Main Navigation */
+#primary-header-row {
+    justify-content: space-between;
+}
 
-        #contextual-controls .header-row {
-            border-top: 1px solid var(--color-panel-border);
-            padding-top: 0.25rem;
-        }
-        #contextual-controls .header-row:first-child {
-            gap: 0.5rem;
-        }
-        #contextual-controls .header-row:has(#positional-filters) {
-            gap: 0.25rem;
-            padding-left: 0.25rem;
-            padding-right: 0.25rem;
-        }
+.header-logo {
+    flex-shrink: 0;
+    width: 44px; /* Reduced size */
+    height: 44px; /* Reduced size */
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.2), 0 4px 15px rgba(0,0,0,0.2);
+}
 
-        #primary-header-row .menu-container,
-        #secondary-header-row .analyzer-button-container,
-        .analyzer-button-slot,
-        .research-button-slot {
-            width: max(var(--header-icon-size), 2.6rem);
-            height: var(--header-control-height);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
+.logo-img {
+    width: 75%; /* Adjusted for smaller container */
+    height: 75%; /* Adjusted for smaller container */
+    object-fit: contain;
+}
 
-        .header-quick-links {
-            display: none;
-            align-items: center;
-            gap: 0.35rem;
-        }
+.main-nav {
+    display: flex;
+    justify-content: space-around;
+    flex-grow: 1;
+    gap: 0.2rem; /* Reduced gap */
+}
 
-        .header-quick-links .analyzer-button-container,
-        .header-quick-links .research-button-container {
-            width: var(--header-icon-size);
-            height: var(--header-control-height);
-        }
+.nav-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px; /* Slightly smaller radius */
+    padding: 0.25rem 0.4rem; /* Reduced padding */
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.6rem; /* Reduced font size */
+    font-weight: 500;
+    width: 54px; /* Reduced width */
+    height: 50px; /* Reduced height */
+    transition: all 0.2s ease;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05), 0 2px 8px rgba(0,0,0,0.15);
+}
 
-        #primary-header-row .menu-container {
-            position: relative;
-        }
+.nav-button i {
+    font-size: 1.2rem; /* Reduced icon size */
+    margin-bottom: 0.1rem; /* Tighter spacing */
+}
 
-        #primary-header-row .menu-button,
-        #secondary-header-row .analyzer-button {
-            width: 100%;
-            height: 100%;
-            border-radius: 8px;
-            box-sizing: border-box;
-        }
+.nav-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--color-text-primary);
+    transform: translateY(-2px);
+}
 
-        #primary-header-row .menu-button svg {
-            width: 1.25rem;
-            height: 1.25rem;
-        }
 
-        #secondary-header-row .analyzer-button,
-        .header-quick-links .analyzer-button,
-        .header-quick-links .research-button {
-            border: none;
-            background: transparent;
-            color: var(--color-text-secondary);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-            gap: 0.1rem;
-        }
+/* Row 2: User/League Controls */
+#secondary-header-row {
+    gap: 0.5rem;
+    justify-content: space-between;
+}
 
-        #secondary-header-row .analyzer-button .analyzer-icon,
-        .header-quick-links .analyzer-button .analyzer-icon,
-        .header-quick-links .research-button .analyzer-icon {
-            display: block;
-            margin: 0;
-            line-height: 1;
-            font-size: 1.22rem;
-        }
+.username-area, .custom-select-wrapper {
+    flex: 1 1 120px; /* Allow growth but set a base */
+    max-width: 150px; /* Uniform max-width */
+    height: 36px; /* Uniform height */
+}
 
-        #secondary-header-row .analyzer-button .analyzer-label,
-        .header-quick-links .analyzer-button .analyzer-label,
-        .header-quick-links .research-button .analyzer-label {
-            display: block;
-            margin: -2px 0 0 0;
-            padding: 0;
-            font-size: 0.50rem;
-            font-weight: 400;
-            line-height: 1;
-            color: inherit;
-            white-space: nowrap;
-        }
-        #secondary-header-row .analyzer-button:hover .analyzer-icon,
-        #secondary-header-row .analyzer-button:focus-visible .analyzer-icon,
-        .header-quick-links .analyzer-button:hover .analyzer-icon,
-        .header-quick-links .analyzer-button:focus-visible .analyzer-icon,
-        .header-quick-links .research-button:hover .analyzer-icon,
-        .header-quick-links .research-button:focus-visible .analyzer-icon {
-            color: var(--color-text-primary);
-        }
+#usernameInput, #leagueSelect {
+    width: 100%;
+    height: 100%;
+    font-size: 0.8rem; /* Uniform font size */
+}
 
-        #primary-header-row .username-area,
-        #secondary-header-row .custom-select-wrapper {
-            justify-self: center;
-            width: 100%;
-        }
+.secondary-switcher {
+    display: flex;
+    border: 1px solid var(--color-panel-border);
+    border-radius: 6px; /* Tighter radius */
+    padding: 2px;
+    gap: 2px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.1));
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
+    height: 36px; /* Match input height */
+}
 
-        #primary-header-row .primary-switcher,
-        #secondary-header-row .secondary-switcher {
-            justify-self: end;
-            width: min(var(--header-switcher-width), 100%);
-            max-width: var(--header-switcher-width);
-            height: var(--header-control-height);
-            display: flex;
-            align-items: stretch;
-            margin-block: 0.075rem;
-        }
+.secondary-switcher button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.1rem 0.4rem; /* Reduced padding */
+    font-size: 0.55rem; /* Reduced font size */
+    gap: 0;
+    min-width: 50px;
+}
+.secondary-switcher button i {
+    font-size: 0.8rem; /* Reduced icon size */
+    margin-bottom: 1px; /* Tighter spacing */
+}
 
-        #primary-header-row .primary-switcher button,
-        #secondary-header-row .secondary-switcher button {
-            flex: 1 1 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+/* Row 3: Filters and Search */
+#filters-row {
+    justify-content: flex-start;
+    gap: 0.5rem;
+}
 
-        #primary-header-row .menu-container,
-        #primary-header-row .username-area,
-        #secondary-header-row .analyzer-button-container,
-        #secondary-header-row .custom-select-wrapper,
-        .analyzer-button-slot,
-        .research-button-slot {
-            margin-block: 0.075rem;
-        }
+.start-sit-button {
+    border: none;
+    background: transparent;
+    color: var(--color-text-secondary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.2rem; /* Reduced padding */
+    gap: 0.1rem;
+    width: 54px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
 
-        #contextual-controls {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-        #contextual-controls.hidden {
-            display: none;
-        }
+.start-sit-button i {
+    font-size: 1.2rem; /* Reduced icon size */
+     margin-bottom: 0.1rem;
+}
 
-        @media (min-width: 1024px) {
-            .header-quick-links {
-                display: flex;
-            }
+.filters-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-grow: 1;
+    justify-content: space-between;
+}
 
-            #primary-header-row {
-                grid-template-columns: var(--header-icon-size) max-content minmax(120px, var(--header-field-max-width)) minmax(var(--header-switcher-width), 1fr);
-            }
+#positional-filters {
+    display: flex;
+    gap: 0.25rem;
+}
 
-            .header-quick-links .analyzer-button,
-            .header-quick-links .research-button {
-                gap: 0.2rem;
-            }
 
-            #header-quick-links #analyzeLeagueButton,
-            #header-quick-links #analyzeLeagueButton.glow-on-select,
-            #header-quick-links #analyzeLeagueButton.active {
-                background: transparent !important;
-                border: none !important;
-                box-shadow: none !important;
-                color: var(--color-text-secondary);
-            }
+/* Desktop Styles */
+@media (min-width: 768px) {
+    .app-header {
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    #primary-header-row {
+        width: 100%;
+        order: 1;
+    }
+    #secondary-header-row {
+        width: auto;
+        order: 2;
+        flex-grow: 1;
+    }
+    #filters-row {
+        width: auto;
+        order: 3;
+    }
+    .main-nav {
+        justify-content: flex-end;
+        gap: 1rem;
+    }
+}
 
-            #header-quick-links #analyzeLeagueButton .analyzer-icon {
-            margin-top: 0 !important;
-            font-size: 1.3rem !important;            
-            }
-            
-            
+/* Ensure hidden truly hides views regardless of ID display rules */
+#playerListView.hidden, #rosterView.hidden { display: none !important; }
 
-            #header-quick-links #analyzeLeagueButton .analyzer-label {
-                margin-top: -2px !important;
-            }
-
-            #header-quick-links #analyzeLeagueButton:hover .analyzer-icon,
-            #header-quick-links #analyzeLeagueButton:focus-visible .analyzer-icon {
-                color: var(--color-text-primary);
-            }
-        }
-
-  /* · · Ensure hidden truly hides views regardless of ID display rules · · */
-        #playerListView.hidden, #rosterView.hidden { display: none !important; }
-        
-        
-                /* · · Row 1 · · */
-                .username-area {
-                    flex-grow: 1;
-                    min-width: 100px; /* prevent it from getting too small */
-                    max-width: var(--header-field-max-width);
-                    padding: 0;
-                    height: var(--header-control-height);
-                    display: flex;
-                    align-items: stretch;
-                }
-                
-                /* · · #usernameInput block · · */
+/* · · #usernameInput block · · */
         #usernameInput {
           background: linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.1));
           border: 1px solid var(--color-panel-border);
@@ -572,116 +543,78 @@
         }
 
 /* ⬇︎  HIGH-END GLASS BUTTONS & SEGMENTED CONTROLS V3  ⬇︎ */
-        .primary-switcher, .secondary-switcher, #positional-filters {
-            display: flex;
-            border: 1px solid var(--color-panel-border);
-            border-radius: 8px;
-            padding: 0.1rem 0.12rem;
-            gap: 0.15rem;
-            flex-shrink: 0;
-       }
-		.primary-switcher {           
-            background: linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.1));
-            box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
-        }
-		.secondary-switcher {           
-            background: linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.1));
-            box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
-        }
-		#positional-filters {           
-            background: linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.1));
-            box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
-        }
-
+.secondary-switcher, #positional-filters {
+    display: flex;
+    border: 1px solid var(--color-panel-border);
+    border-radius: 8px;
+    padding: 0.1rem 0.12rem;
+    gap: 0.15rem;
+    flex-shrink: 0;
+}
+.secondary-switcher {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.1));
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
+}
+#positional-filters {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.1));
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
+}
 
 /* ⬇︎ MAIN BUTTON STYLES  ⬇︎ */
-        .primary-switcher button {
-            padding: 0.12rem 0.55rem;
-            font-size: 0.85rem;
-            font-weight: 400;
-            border: 1px solid transparent;
-            background: transparent;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-            color: var(--color-text-secondary);
-            text-shadow: 0 0 2px rgba(0,0,0,0.2);
-        }
-        .secondary-switcher button, .filter-btn {
-            padding: 0.12rem 0.55rem;
-            font-size: 0.85rem;
-            font-weight: 400;
-            border: 1px solid transparent;
-            background: transparent;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-            color: var(--color-text-secondary);
-            text-shadow: 0 0 2px rgba(0,0,0,0.2);
-        }
-        .filter-btn {
-            padding: 0.15rem 0.6rem;
-            font-size: 0.85rem;
-            font-weight: 400;
-            border: 1px solid transparent;
-            background: transparent;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-            color: var(--color-text-secondary);
-            text-shadow: 0 0 2px rgba(0,0,0,0.2);
-        }
+.secondary-switcher button, .filter-btn {
+    padding: 0.12rem 0.55rem;
+    font-size: 0.85rem;
+    font-weight: 400;
+    border: 1px solid transparent;
+    background: transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    color: var(--color-text-secondary);
+    text-shadow: 0 0 2px rgba(0,0,0,0.2);
+}
+.filter-btn {
+    padding: 0.15rem 0.6rem;
+    font-size: 0.85rem;
+    font-weight: 400;
+    border: 1px solid transparent;
+    background: transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    color: var(--color-text-secondary);
+    text-shadow: 0 0 2px rgba(0,0,0,0.2);
+}
 
-        
-        /* · · Primary buttons are bolder · · */
-        .primary-switcher button {
-            font-weight: 400;
-            font-size: 0.9rem;
-        }
+/* · · Hover States · · */
+.secondary-switcher button:hover, .filter-btn:hover {
+    color: var(--color-text-primary);
+    background: var(--color-panel-bg);
+}
 
-        /* · · Hover States · · */
-        .primary-switcher button:hover, .secondary-switcher button:hover, .filter-btn:hover {
-            color: var(--color-text-primary);
-            background: var(--color-panel-bg);
-        }
+/* · · Active & Counterpart States (EDITED) · · */
+#positionalViewBtn.active {
+    color: #D8E2FFEE;
+    border-color: var(--color-accent-primary); /* Purple */
+    box-shadow: 0 0 8px var(--color-accent-primary-glow);
+}
 
-        /* · · Active & Counterpart States (EDITED) · · */
+#lineupViewBtn.active {
+    color: #c4c8ea;
+    border-color: var(--color-accent-trade-win); /* Green */
+    box-shadow: 0 0 8px rgba(0, 245, 160, 0.5);
+}
 
-        #fetchRostersButton.active {
-            color: #D8F2FFEE;
-            border-color: var(--color-accent-secondary); /* Blue */
-            box-shadow: 0 0 8px var(--color-accent-secondary-glow);
-        }
-
-        #fetchOwnershipButton.active {
-            color: #c4c8ea;
-            border-color: #D90059; /* Pink */
-            box-shadow: 0 0 8px #D90059;
-        }
-
-        #positionalViewBtn.active {
-            color: #D8E2FFEE;
-            border-color: var(--color-accent-primary); /* Purple */
-            box-shadow: 0 0 8px var(--color-accent-primary-glow);
-        }
-
-        #depthChartViewBtn.active {
-            color: #c4c8ea;
-            border-color: var(--color-accent-trade-win); /* Green */
-            box-shadow: 0 0 8px rgba(0, 245, 160, 0.5);
-        }
-
-        /* · · Counterpart buttons are dimmed · · */
-        .primary-switcher button.counterpart-active, .secondary-switcher button.counterpart-active {
-            color: var(--color-text-tertiary);
-            background: transparent;
-        }
-        .primary-switcher button.counterpart-active:hover, .secondary-switcher button.counterpart-active:hover {
-            color: var(--color-text-secondary);
-        }
+/* · · Counterpart buttons are dimmed · · */
+.secondary-switcher button.counterpart-active {
+    color: var(--color-text-tertiary);
+    background: transparent;
+}
+.secondary-switcher button.counterpart-active:hover {
+    color: var(--color-text-secondary);
+}
 
         /* · · Filter Buttons · · */
        .filter-btn.active[data-position="QB"] {
@@ -2436,80 +2369,13 @@ font-weight: 500 !important;
   line-height: 1.1;
 }
 
-/* ⬇︎  MENU BUTTON AND DROPDOWN  ⬇︎ */
-.menu-container {
-    position: relative;
-    display: inline-block;
-}
-
-.menu-button {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.menu-button svg {
-    fill: var(--color-text-secondary);
-}
-
-.menu-button:hover svg {
-    fill: var(--color-text-primary);
-}
-
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: rgba(11, 15, 28, 0.94);
-    border: 1px solid var(--color-panel-border);
-    border-radius: var(--card-border-radius);
-    padding: 0.4rem 0.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    z-index: 20;
-    min-width: 210px;
-    box-shadow: 0 12px 32px rgba(5, 7, 15, 0.5);
-    backdrop-filter: blur(8px) saturate(130%);
-}
-
-.dropdown-menu a {
-    color: var(--color-text-secondary);
-    text-decoration: none;
-    padding: 0.35rem 0.55rem;
-    border-radius: var(--card-border-radius);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 500;
-    white-space: nowrap;
-}
-
-.dropdown-menu a i {
-    color: inherit;
-    font-size: 1.05rem;
-    min-width: 1.1rem;
-    text-align: center;
-}
-
-.dropdown-menu a:hover {
-    background-color: var(--color-panel-bg);
-    color: var(--color-text-primary);
-}
-
-.dropdown-menu.hidden {
-    display: none;
-}
+/* STYLES FOR DROPDOWN AND MENU REMOVED AS THEY ARE NO LONGER IN USE */
 
 
 #filters-row {
     justify-content: flex-start;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.5rem; /* Adjusted gap */
     flex-wrap: nowrap;
 }
 
@@ -2517,19 +2383,15 @@ font-weight: 500 !important;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    margin-left: 4px;
+    flex-grow: 1; /* Allow container to grow */
+    justify-content: flex-end; /* Push content to the right */
 }
 
-.research-button-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: max(var(--header-icon-size), 2.6rem);
-    height: var(--header-control-height);
+.start-sit-button-container {
     flex-shrink: 0;
 }
 
-.research-button {
+.start-sit-button {
     border: none;
     background: transparent;
     color: var(--color-text-secondary);
@@ -2537,28 +2399,33 @@ font-weight: 500 !important;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.1rem;
     padding: 0;
-    margin-top: 5px;
-    text-shadow: 0 0 2px #6900ffdd;
+    gap: 0.1rem;
+    width: 54px; /* Adjusted size */
+    height: 54px; /* Adjusted size */
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    transition: all 0.2s ease;
 }
 
-.research-button .analyzer-icon {
-    font-size: 1.1rem;
+.start-sit-button i {
+    font-size: 1.3rem; /* Adjusted icon size */
+     margin-bottom: 0.2rem;
 }
 
-.research-button .analyzer-label {
-    font-size: 0.5rem;
-    font-weight: 400;
-    color: inherit;
-    white-space: nowrap;
+.start-sit-button .analyzer-label {
+    font-size: 0.6rem; /* Adjusted label size */
 }
+
 #clearFiltersButton {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 0.2rem;   /* small space on the left  */
-    margin-right: 0.7rem;  /* larger space on the right */
+    margin-left: 0.2rem;
+    margin-right: 0.5rem; /* Adjusted margin */
     text-decoration: none;
 }
 
