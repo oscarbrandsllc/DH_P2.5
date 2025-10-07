@@ -1,0 +1,3 @@
+Verification script failed: Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:8080/DH_P3/rosters/rosters.html?username=the_oracle
+Call log:
+  - navigating to "http://localhost:8080/DH_P3/rosters/rosters.html?username=the_oracle", waiting until "networkidle"
