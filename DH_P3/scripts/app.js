@@ -403,12 +403,12 @@ function showLegend(){ try{ document.getElementById('legend-section')?.classList
         }
 
         function updateButtonStates(activeButton) {
-            const isRosters = activeButton === 'rosters';
-            fetchRostersButton.classList.toggle('active', isRosters);
-            fetchOwnershipButton.classList.toggle('active', !isRosters);
+            // const isRosters = activeButton === 'rosters';
+            // fetchRostersButton.classList.toggle('active', isRosters);
+            // fetchOwnershipButton.classList.toggle('active', !isRosters);
 
-            fetchRostersButton.classList.toggle('counterpart-active', !isRosters);
-            fetchOwnershipButton.classList.toggle('counterpart-active', isRosters);
+            // fetchRostersButton.classList.toggle('counterpart-active', !isRosters);
+            // fetchOwnershipButton.classList.toggle('counterpart-active', isRosters);
         }
 
         async function handleFetchRosters() {
