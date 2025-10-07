@@ -248,177 +248,121 @@
         box-shadow: rgba(255, 255, 255, 0.05) 0px 0px 0px 0px inset, rgba(200, 200, 200, 0.025) 0px 0px 0px 3px inset, rgba(0, 0, 0, 0.22) 0px 10px 26px 0px;
         }
 /* ⬇︎  HEADER & CONTROLS (3-ROW REDESIGN)  ⬇︎ */
-        .app-header {
-            padding: 0.25rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-            --header-icon-size: 2.25rem;
-            --header-control-height: 2.2rem;
-            --header-field-max-width: 160px;
-            --header-switcher-width: 12.25rem;
-        }
+.app-header {
+    padding: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
 
-        .header-row {
-            display: flex;
-            flex-wrap: nowrap; /* Prevent wrapping */
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            width: 100%;
-            padding-bottom: 2px; /* space for scrollbar */
-        }
+.header-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+}
 
-        .app-header > .header-row:first-of-type,
-        #contextual-controls .header-row:first-child {
-            display: grid;
-            grid-template-columns: var(--header-icon-size) minmax(120px, var(--header-field-max-width)) minmax(var(--header-switcher-width), 1fr);
-            align-items: center;
-            gap: 0.5rem;
-            padding-left: 0.25rem;
-            padding-right: 0.25rem;
-        }
+#primary-header-row {
+    justify-content: space-between;
+}
 
-        #contextual-controls .header-row {
-            border-top: 1px solid var(--color-panel-border);
-            padding-top: 0.25rem;
-        }
-        #contextual-controls .header-row:first-child {
-            gap: 0.5rem;
-        }
-        #contextual-controls .header-row:has(#positional-filters) {
-            gap: 0.25rem;
-            padding-left: 0.25rem;
-            padding-right: 0.25rem;
-        }
+.logo-container {
+    flex-shrink: 0;
+}
 
-        #primary-header-row .menu-container,
-        #secondary-header-row .analyzer-button-container,
-        .analyzer-button-slot,
-        .research-button-slot {
-            width: max(var(--header-icon-size), 2.6rem);
-            height: var(--header-control-height);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
+.app-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    padding: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25), inset 0 1px 1px rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
 
-        .header-quick-links {
-            display: none;
-            align-items: center;
-            gap: 0.35rem;
-        }
+.main-nav-buttons {
+    display: flex;
+    gap: 0.35rem;
+    justify-content: center;
+    flex-grow: 1;
+}
 
-        .header-quick-links .analyzer-button-container,
-        .header-quick-links .research-button-container {
-            width: var(--header-icon-size);
-            height: var(--header-control-height);
-        }
+.nav-button, .start-sit-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--color-text-secondary);
+    border-radius: 12px;
+    padding: 0.35rem;
+    font-size: 0.65rem;
+    font-weight: 500;
+    gap: 0.25rem;
+    width: 56px;
+    height: 56px;
+    text-align: center;
+    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    cursor: pointer;
+}
 
-        #primary-header-row .menu-container {
-            position: relative;
-        }
+.nav-button i, .start-sit-button i {
+    font-size: 1.3rem;
+    line-height: 1;
+}
 
-        #primary-header-row .menu-button,
-        #secondary-header-row .analyzer-button {
-            width: 100%;
-            height: 100%;
-            border-radius: 8px;
-            box-sizing: border-box;
-        }
+.nav-button span, .start-sit-button span {
+    line-height: 1;
+    margin-top: 2px;
+}
 
-        #primary-header-row .menu-button svg {
-            width: 1.25rem;
-            height: 1.25rem;
-        }
+.nav-button:hover, .start-sit-button:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
+    color: var(--color-text-primary);
+}
 
-        #secondary-header-row .analyzer-button,
-        .header-quick-links .analyzer-button,
-        .header-quick-links .research-button {
-            border: none;
-            background: transparent;
-            color: var(--color-text-secondary);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-            gap: 0.1rem;
-        }
+#secondary-header-row {
+    justify-content: space-between;
+}
 
-        #secondary-header-row .analyzer-button .analyzer-icon,
-        .header-quick-links .analyzer-button .analyzer-icon,
-        .header-quick-links .research-button .analyzer-icon {
-            display: block;
-            margin: 0;
-            line-height: 1;
-            font-size: 1.22rem;
-        }
+#secondary-header-row .username-area,
+#secondary-header-row .custom-select-wrapper {
+    flex-grow: 1;
+    max-width: 180px;
+}
 
-        #secondary-header-row .analyzer-button .analyzer-label,
-        .header-quick-links .analyzer-button .analyzer-label,
-        .header-quick-links .research-button .analyzer-label {
-            display: block;
-            margin: -2px 0 0 0;
-            padding: 0;
-            font-size: 0.50rem;
-            font-weight: 400;
-            line-height: 1;
-            color: inherit;
-            white-space: nowrap;
-        }
-        #secondary-header-row .analyzer-button:hover .analyzer-icon,
-        #secondary-header-row .analyzer-button:focus-visible .analyzer-icon,
-        .header-quick-links .analyzer-button:hover .analyzer-icon,
-        .header-quick-links .analyzer-button:focus-visible .analyzer-icon,
-        .header-quick-links .research-button:hover .analyzer-icon,
-        .header-quick-links .research-button:focus-visible .analyzer-icon {
-            color: var(--color-text-primary);
-        }
+#secondary-header-row .secondary-switcher {
+    flex-shrink: 0;
+    width: auto;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.1));
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
+}
+#secondary-header-row .secondary-switcher button {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.8rem;
+}
 
-        #primary-header-row .username-area,
-        #secondary-header-row .custom-select-wrapper {
-            justify-self: center;
-            width: 100%;
-        }
+#filters-row {
+     justify-content: space-between;
+}
 
-        #primary-header-row .primary-switcher,
-        #secondary-header-row .secondary-switcher {
-            justify-self: end;
-            width: min(var(--header-switcher-width), 100%);
-            max-width: var(--header-switcher-width);
-            height: var(--header-control-height);
-            display: flex;
-            align-items: stretch;
-            margin-block: 0.075rem;
-        }
+#filters-row .start-sit-button-container {
+    flex-shrink: 0;
+}
 
-        #primary-header-row .primary-switcher button,
-        #secondary-header-row .secondary-switcher button {
-            flex: 1 1 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #primary-header-row .menu-container,
-        #primary-header-row .username-area,
-        #secondary-header-row .analyzer-button-container,
-        #secondary-header-row .custom-select-wrapper,
-        .analyzer-button-slot,
-        .research-button-slot {
-            margin-block: 0.075rem;
-        }
-
-        #contextual-controls {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-        #contextual-controls.hidden {
-            display: none;
-        }
+#filters-row .filters-container {
+    flex-grow: 1;
+    justify-content: flex-end;
+}
 
         @media (min-width: 1024px) {
             .header-quick-links {
@@ -2436,74 +2380,6 @@ font-weight: 500 !important;
   line-height: 1.1;
 }
 
-/* ⬇︎  MENU BUTTON AND DROPDOWN  ⬇︎ */
-.menu-container {
-    position: relative;
-    display: inline-block;
-}
-
-.menu-button {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.menu-button svg {
-    fill: var(--color-text-secondary);
-}
-
-.menu-button:hover svg {
-    fill: var(--color-text-primary);
-}
-
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: rgba(11, 15, 28, 0.94);
-    border: 1px solid var(--color-panel-border);
-    border-radius: var(--card-border-radius);
-    padding: 0.4rem 0.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    z-index: 20;
-    min-width: 210px;
-    box-shadow: 0 12px 32px rgba(5, 7, 15, 0.5);
-    backdrop-filter: blur(8px) saturate(130%);
-}
-
-.dropdown-menu a {
-    color: var(--color-text-secondary);
-    text-decoration: none;
-    padding: 0.35rem 0.55rem;
-    border-radius: var(--card-border-radius);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 500;
-    white-space: nowrap;
-}
-
-.dropdown-menu a i {
-    color: inherit;
-    font-size: 1.05rem;
-    min-width: 1.1rem;
-    text-align: center;
-}
-
-.dropdown-menu a:hover {
-    background-color: var(--color-panel-bg);
-    color: var(--color-text-primary);
-}
-
-.dropdown-menu.hidden {
-    display: none;
-}
 
 
 #filters-row {
@@ -2529,30 +2405,6 @@ font-weight: 500 !important;
     flex-shrink: 0;
 }
 
-.research-button {
-    border: none;
-    background: transparent;
-    color: var(--color-text-secondary);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.1rem;
-    padding: 0;
-    margin-top: 5px;
-    text-shadow: 0 0 2px #6900ffdd;
-}
-
-.research-button .analyzer-icon {
-    font-size: 1.1rem;
-}
-
-.research-button .analyzer-label {
-    font-size: 0.5rem;
-    font-weight: 400;
-    color: inherit;
-    white-space: nowrap;
-}
 #clearFiltersButton {
     display: flex;
     align-items: center;
@@ -2740,56 +2592,6 @@ border: 1px solid rgb(169 178 227 / 9%);
     justify-self: start;
 }
 
-#analyzeLeagueButton {
-    padding: 0rem 0.6rem;
-    font-size: 1.1rem;
-    font-weight: 500;
-    border: 1px solid #cfafcf8a;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.02), rgba(0,0,0,0.2))!important;
-    box-shadow: 0 0 9px #eeddff65;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-    color: #d1b1d1aa;
-}
-/* · · Anlz.Lg button · · */
-body[data-page="rosters"] #secondary-header-row #analyzeLeagueButton {
-    padding: 0;
-    border: none;
-    background: transparent !important;
-    box-shadow: none;
-    }
-
-#analyzeLeagueButton {
-  color: #9096C0;            
-  margin-top: 2px;               
-}
-
-#analyzeLeagueButton i {
-  filter:
-    drop-shadow(0px 0px 2px  #cfafcf69);
-    }
-
-
-body[data-page="rosters"] #secondary-header-row #analyzeLeagueButton.glow-on-select,
-body[data-page="rosters"] #secondary-header-row #analyzeLeagueButton.active {
-    box-shadow: none;
-    background: transparent;
-    border: none;
-    color: var(--color-text-primary);
-}
-
-
-/* · · League Analyzer Button · · */
-
-    #analyzeLeagueButton .analyzer-label{
-        margin-top: 1px !important;
-    }
-    #analyzeLeagueButton .analyzer-icon{
-        font-size: 1.3rem !important;
-        margin-top: 5px !important;
-}
 
   /* · · Global page footnote (bottom of page) · · */
     .page-footnote{
