@@ -3441,25 +3441,24 @@ body[data-page="rosters"] #secondary-header-row #analyzeLeagueButton.active {
 
     #modal-body tbody .week-cell {
         font-weight: 700;
-        text-align: left;
+        text-align: center;
         white-space: nowrap;
-    }
-
-    .week-cell .week-number,
-    .week-opponent-label,
-    .week-opponent-separator {
-        display: inline-block;
         vertical-align: middle;
     }
 
+    .week-cell .week-number,
+    .week-opponent-label {
+        display: block;
+    }
+
     .week-opponent-separator {
-        font-weight: 700;
+        display: none;
     }
 
     .week-opponent-label {
-        font-size: 0.7em;
-        line-height: 1.1;
-        margin-left: 0.1em;
+        font-size: 0.65em;
+        line-height: 1;
+        margin-top: -2px;
         font-weight: 600;
     }
 
@@ -3777,7 +3776,7 @@ body[data-page="rosters"] #secondary-header-row #analyzeLeagueButton.active {
 
     .has-rank-annotation .stat-rank-annotation {
         display: inline-block;
-        font-size: 0.72em;
+        font-size: 0.8em;
         line-height: 1;
         margin-left: 0.2em;
         transform: translateY(-0.45em);
