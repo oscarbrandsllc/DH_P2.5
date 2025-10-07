@@ -31,50 +31,96 @@
   <div class="relative z-10 content-wrapper">
     <div id="header-container">
       <header class="app-header glass-panel">
-        <div class="header-row">
-          <div class="menu-container">
-            <button id="menu-button" class="menu-button" aria-label="Toggle navigation">
-              <svg viewBox="0 0 100 80" width="20" height="20" aria-hidden="true">
-                <rect width="100" height="15"></rect>
-                <rect y="30" width="100" height="15"></rect>
-                <rect y="60" width="100" height="15"></rect>
-              </svg>
-            </button>
-            <div id="dropdown-menu" class="dropdown-menu hidden">
-              <a href="../index.html">
-                <i class="fa-solid fa-house-user" aria-hidden="true"></i>
-                <span>Home</span>
-              </a>
-              <a href="#" id="menu-rosters">
-                <i class="fa-solid fa-clipboard-list" aria-hidden="true"></i>
-                <span>Rosters</span>
-              </a>
-              <a href="#" id="menu-ownership">
-                <i class="fa-solid fa-percent" aria-hidden="true"></i>
-                <span>Ownership</span>
-              </a>
-              <a href="#" id="menu-research">
-                <i class="fa-solid fa-flask" aria-hidden="true"></i>
-                <span>Research</span>
-              </a>
-              <a href="#" id="menu-analyzer" class="active">
-                <i class="fa-solid fa-square-poll-vertical" aria-hidden="true"></i>
-                <span>League Analyzer</span>
-              </a>
-            </div>
-          </div>
-          <div class="username-area">
-            <label class="sr-only" for="usernameInput">Sleeper username</label>
-            <input autocapitalize="none" autocomplete="username" autocorrect="off" id="usernameInput" inputmode="text" name="username" placeholder="SLPR Username..." type="text" value="The_Oracle" />
-          </div>
-          <div class="custom-select-wrapper">
-            <label class="sr-only" for="leagueSelect">Active league</label>
-            <select id="leagueSelect" disabled>
-              <option>Select a league...</option>
-            </select>
-          </div>
+    <!-- ROW 1: Logo, Home, Rosters, Ownership, L.Analyze, Research -->
+    <div class="header-row" id="primary-header-row">
+        <div class="logo-container">
+            <img src="../assets/welcome/welcome-logo-256.png" alt="Logo" class="app-logo"/>
         </div>
-      </header>
+        <div class="nav-buttons-container">
+            <button class="nav-button" id="homeButton">
+                <i class="fa-solid fa-house-user"></i>
+                <span>Home</span>
+            </button>
+            <button class="nav-button" id="rostersButton">
+                <i class="fa-solid fa-clipboard-list"></i>
+                <span>Rosters</span>
+            </button>
+            <button class="nav-button" id="ownershipButton">
+                <i class="fa-solid fa-percent"></i>
+                <span>Ownership</span>
+            </button>
+            <button class="nav-button active" id="analyzerButton">
+                <i class="fa-solid fa-square-poll-vertical"></i>
+                <span>L.Analyze</span>
+            </button>
+            <button class="nav-button" id="researchButton">
+                <i class="fa-solid fa-flask"></i>
+                <span>Research</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ROW 2: Username, League Selector, Positional/Lineup Toggle -->
+    <div class="header-row" id="secondary-header-row">
+        <div class="username-area">
+            <input autocapitalize="none" autocomplete="username" autocorrect="off" id="usernameInput" inputmode="text" name="username" placeholder="SLPR Username..." type="text" value="The_Oracle"/>
+        </div>
+        <div class="custom-select-wrapper">
+            <select disabled="" id="leagueSelect">
+                <option>Select a league...</option>
+            </select>
+        </div>
+        <div class="view-switcher secondary-switcher">
+            <button id="positionalViewBtn">
+                <i class="fa-solid fa-id-card"></i>
+                <span>Positional</span>
+            </button>
+            <button id="lineupViewBtn">
+                <i class="fa-solid fa-elevator"></i>
+                <span>Lineup</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ROW 3: Start/Sit, Filters, Clear, Search -->
+    <div class="header-row" id="filters-row">
+        <div class="start-sit-button-container">
+            <button class="menu-button" id="startSitButton" type="button" aria-label="Start/Sit Tool">
+                <i class="fa-solid fa-elevator"></i>
+                <span>Start/Sit</span>
+            </button>
+        </div>
+        <div class="filters-container">
+            <div id="positional-filters">
+                <button class="filter-btn" data-position="QB">QB</button>
+                <button class="filter-btn" data-position="RB">RB</button>
+                <button class="filter-btn" data-position="WR">WR</button>
+                <button class="filter-btn" data-position="TE">TE</button>
+                <button class="filter-btn" data-position="FLX">FLX</button>
+            </div>
+            <button class="control-button-subtle" id="clearFiltersButton">
+                <span class="clear-filters-stack">
+                    <i class="fa-solid fa-filter-circle-xmark" aria-hidden="true"></i>
+                    <span class="sr-only">Clear filters</span>
+                </span>
+            </button>
+            <div class="compare-controls">
+                <button class="control-button hidden" id="compareButton" aria-hidden="true" tabindex="-1" style="display:none;"></button>
+                <button id="compareSearchToggle" class="control-button-subtle compare-search-toggle" aria-haspopup="true" aria-expanded="false" aria-controls="compareSearchPopover">
+                    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                    <span class="sr-only">Search teams</span>
+                </button>
+                <div id="compareSearchPopover" class="compare-search-popover hidden" role="dialog" aria-modal="false">
+                    <button type="button" id="compareSearchClose" class="compare-search-close" aria-label="Close search popover">
+                        <i class="fa-solid fa-circle-xmark" aria-hidden="true"></i>
+                    </button>
+                    <label for="compareSearchInput" class="sr-only">Search teams</label>
+                    <input id="compareSearchInput" type="search" placeholder="Search Players…" autocomplete="off" inputmode="search" />
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
     </div>
     <main class="container mx-auto analyzer-main" id="content">
       <section class="analyzer-hero glass-panel" aria-labelledby="analyzer-hero-heading">
