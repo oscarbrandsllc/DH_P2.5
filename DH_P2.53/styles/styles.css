@@ -6,6 +6,7 @@
         --color-bg: #0D0E1B;
         --color-bg-light: #1E1F30;
         --color-panel-bg: rgba(22, 24, 43, 0.1);
+        --roster-card-blur: 1px;
         --color-panel-border: rgba(128, 138, 189, 0.2);
         --color-panel-border-glow: rgba(128, 138, 189, 0.4);
     
@@ -904,12 +905,10 @@
             gap: 0.25rem;
         }
 
-@media (min-width: 820px) {
-  @supports (content-visibility: auto) {
-    #rosterGrid .team-card {
-        content-visibility: auto;
-        contain-intrinsic-size: auto var(--team-card-intrinsic-size, 1200px);
-    }
+@supports (content-visibility: auto) {
+  #rosterGrid.roster-cv-enabled .team-card {
+      content-visibility: auto;
+      contain-intrinsic-size: auto var(--team-card-intrinsic-size, 1200px);
   }
 }
 
@@ -988,10 +987,20 @@
             flex-direction: column;
             gap: 0.01rem;
             transition: all 0.2s ease;
-            backdrop-filter: blur(1px);
-            -webkit-backdrop-filter: blur(1px);
+            backdrop-filter: blur(var(--roster-card-blur));
+            -webkit-backdrop-filter: blur(var(--roster-card-blur));
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
         }
+
+@media (min-width: 820px) {
+  .player-row,
+  .pick-row {
+      --roster-card-blur: 0px;
+      background: rgba(22, 24, 43, 0.35);
+      box-shadow: 0 12px 28px rgba(7, 10, 25, 0.32);
+      contain: paint;
+  }
+}
         .is-trade-mode .player-row, .is-trade-mode .pick-row { 
             cursor: pointer; 
         }
@@ -3091,13 +3100,13 @@ body[data-page="rosters"] #secondary-header-row #analyzeLeagueButton.active {
     #modal-body table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.75rem;
+      font-size: 0.69rem;
       margin-bottom:2px;
     }
     
     #modal-body th,
     #modal-body td {
-      padding: 0.3rem 0.55rem;
+      padding: 0.15rem 0.4rem;
       text-align: center;
       /* border-bottom is removed from here to be more specific */
     }
@@ -3432,26 +3441,33 @@ body[data-page="rosters"] #secondary-header-row #analyzeLeagueButton.active {
 
     #modal-body tbody .week-cell {
         font-weight: 700;
-        text-align: left;
+        text-align: center;
         white-space: nowrap;
-    }
-
-    .week-cell .week-number,
-    .week-opponent-label,
-    .week-opponent-separator {
-        display: inline-block;
         vertical-align: middle;
     }
 
+    .week-cell .week-number,
+    .week-opponent-label {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 300;
+        color: #adb1cc;
+    }
+
     .week-opponent-separator {
-        font-weight: 700;
+        display: none;
     }
 
     .week-opponent-label {
-        font-size: 0.7em;
-        line-height: 1.1;
-        margin-left: 0.1em;
-        font-weight: 600;
+        font-size: 0.75em;
+        line-height: 1.4;
+        margin-top: -2px;
+        font-weight: 500;
+    }
+    .week-opponent-label .stat-rank-annotation {
+        font-size: 0.9em !important;
+        font-weight: 700;
+
     }
 
 /* · · Table Footer · · */
@@ -6838,3 +6854,78 @@ body[data-page="analyzer"] #leagueSelect {
 #dh-scramble .dh-dud { color: #7666b5 !important; opacity: 0.75; }
 
 /* === end loader block === */
+
+/* New Header Styles */
+.app-header {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    gap: 1rem;
+}
+
+.app-header.glass-panel {
+    background-color: rgba(13, 14, 35, 0.21);
+    background-image: linear-gradient(rgba(255,255,255, 0.03), rgba(255,255,255, 0.03));
+    -webkit-backdrop-filter: blur(18px) saturate(120%) brightness(115%);
+    backdrop-filter: blur(18px) saturate(120%) brightness(115%);
+    border: 1px solid rgba(128, 138, 189, 0.26);
+    border-radius: 10px;
+    box-shadow: rgba(255, 255, 255, 0.05) 0px 0px 0px 0px inset, rgba(200, 200, 200, 0.025) 0px 0px 0px 3px inset, rgba(0, 0, 0, 0.22) 0px 10px 26px 0px;
+}
+
+.logo-container {
+    flex-shrink: 0;
+}
+
+.app-logo-wrapper {
+    width: 40px;
+    height: 40px;
+}
+
+.app-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.nav-buttons-container {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.nav-button {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--color-text-secondary);
+    border-radius: 8px;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.nav-button:hover {
+    color: var(--color-text-primary);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-button.active {
+    color: var(--color-text-primary);
+    background: rgba(118, 109, 255, 0.2);
+    border-color: rgba(118, 109, 255, 0.4);
+    box-shadow: 0 0 8px rgba(118, 109, 255, 0.3);
+}
+
+.nav-button .nav-label {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
