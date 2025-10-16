@@ -49,6 +49,30 @@ function showLegend(){ try{ document.getElementById('legend-section')?.classList
         const supportsContentVisibility = typeof CSS !== 'undefined'
             && typeof CSS.supports === 'function'
             && CSS.supports('content-visibility', 'auto');
+        const contentVisibilityMediaQuery = typeof window !== 'undefined'
+            && typeof window.matchMedia === 'function'
+            ? window.matchMedia('(max-width: 1019px)')
+            : null;
+
+        function applyRosterContentVisibilityMode() {
+            if (!rosterGrid) return;
+            if (supportsContentVisibility && contentVisibilityMediaQuery?.matches) {
+                rosterGrid.classList.add('roster-cv-enabled');
+            } else {
+                rosterGrid.classList.remove('roster-cv-enabled');
+            }
+        }
+
+        applyRosterContentVisibilityMode();
+
+        if (contentVisibilityMediaQuery) {
+            const handleContentVisibilityChange = () => applyRosterContentVisibilityMode();
+            if (typeof contentVisibilityMediaQuery.addEventListener === 'function') {
+                contentVisibilityMediaQuery.addEventListener('change', handleContentVisibilityChange);
+            } else if (typeof contentVisibilityMediaQuery.addListener === 'function') {
+                contentVisibilityMediaQuery.addListener(handleContentVisibilityChange);
+            }
+        }
 
         const COMPARE_BUTTON_PREVIEW_HTML = '<span class="button-text">Preview</span>';
         const COMPARE_BUTTON_SHOW_ALL_HTML = '<span class="compare-show-all-stack"><i aria-hidden="true" class="fa-solid fa-arrows-left-right-to-line compare-show-all-icon"></i><span class="compare-show-all-label">Show All</span></span>';
@@ -3059,7 +3083,7 @@ const wrTeStatOrder = [
         }
 
         function calibrateTeamCardIntrinsicSize(card) {
-            if (!supportsContentVisibility || !card) return;
+            if (!supportsContentVisibility || !card || !rosterGrid?.classList.contains('roster-cv-enabled')) return;
             requestAnimationFrame(() => {
                 const measuredHeight = card.getBoundingClientRect().height;
                 if (measuredHeight > 0) {
@@ -3069,6 +3093,7 @@ const wrTeStatOrder = [
         }
 
         function renderAllTeamData(teams) {
+            applyRosterContentVisibilityMode();
             rosterGrid.innerHTML = '';
             rosterGrid.style.justifyContent = ''; // Reset style
 
