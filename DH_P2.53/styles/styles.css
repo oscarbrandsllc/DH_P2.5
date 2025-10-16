@@ -913,6 +913,17 @@
   }
 }
 
+@media (min-width: 820px) {
+  @supports (content-visibility: auto) {
+    .roster-column .player-row,
+    .roster-column .pick-row {
+      content-visibility: auto;
+      contain: layout paint;
+      contain-intrinsic-size: auto 88px;
+    }
+  }
+}
+
         .roster-section h3 {
       font-size: 0.8rem;
       font-weight: 700;
